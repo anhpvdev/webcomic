@@ -1,0 +1,165 @@
+{{>header cookies=cookies}}
+<div class="user grid wide">
+        <div class="user-container row ">
+            <div class="col l-4 m-6 c-8">
+                <div class="user-sidebar">
+                    <div class="user-menu">
+                        <div class="user-menu__avatar">
+                            <img class="account_image2" src="/public/image/avatar.jpg" alt="">
+                        </div>
+                        <div class="user-menu__username">
+                            <div>
+                                <span>Tài Khoản:</span>
+                                <h3 class="account_username">Maviess10</h3>
+                            </div>
+                        </div>
+                        <div class="user-menu__listbar">
+                            <i class="fa-solid fa-bars" id="user-menu__listbar"></i>
+                        </div>
+                    </div>
+                    <div class="user-list" id="user-listbar">
+                        <ul>
+                            <li class="user-listbar__user">
+                                <a href="./user">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <span>Thông tin </span>
+                                </a>
+                            </li>
+                            <li class="user-listbar__account">
+                                <a href="./account" style="color: orange;">
+                                    <i class="fa-solid fa-user"></i>
+                                    <span>Tài Khoản</span>
+                                </a>
+                            </li>
+                            <li class="user-listbar__followcomic">
+                               <a href="./followcomic">
+                                    <i class="fa-solid fa-book"></i>
+                                    <span>Truyện theo dõi</span>
+                               </a>
+                            </li>
+                            <li class="user-listbar__changepassword">
+                                <a href="./changepassword">
+                                    <i class="fa-solid fa-key"></i>
+                                    <span>Đổi mật khẩu</span>
+                                </a>
+                            </li>
+                            <li class="">
+                               <a href="/logout">
+                                    <i class="fa-sharp fa-solid fa-circle-xmark"></i>
+                                    <span>Đăng xuất</span>
+                               </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col userpage">
+                <div class="user-page">
+                    <div class="user-page__header">
+                        <span>THÔNG TIN TÀI KHOẢN</span>
+                    </div>
+
+                    {{#if message}}
+                        <div class="error-message">{{ message }}</div>
+                    {{/if}}
+
+                    <div class="row main-page account">
+                        <form method="post" class="user-page__account " action="/updateUserInforbasic" >
+                            <div class="inf info-name">
+                                <p>Họ Và tên:</p>
+                                <input name="new_fullname" class="user-input" type="text">
+                            </div>
+                            <div class="inf info-gender">
+                                <p>Giới Tính:</p>
+                                <input name="new_gender" class="user-input" type="text">
+                            </div>
+                             <div class="account-change">
+                                    <button class="button-update">Cập nhật thông tin</button>
+                            </div>
+
+                        </form>
+                    <div class="first-form_account"></div>
+                    <div class="row main-page account"> 
+                            <form method="POST" action="/updateUserinforavatar" enctype="multipart/form-data"  class="user-page__account">
+                                <div class="inf info-avatar">
+                                    <p>Avatar:</p>
+                                    <div>
+                                        <img class="account_image" id="avatar-upload" src="" alt="">
+                                    </div>
+                                    <input name="userid" value="{{userid}}" type="hidden">
+                                    <input name="new_avatar" type="file" id="changeavt">
+                                </div>
+                                <div class="account-change">
+                                    <button class="button-update">Cập nhật Avatar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    <div class="second-form_account"></div>
+                    <div class="row main-page account"> 
+                            <form action="/updateUserinforemail"  method="POST" action="" class="user-page__account">
+                                <div class="inf info-gmail">
+                                    <p>Email:</p>
+                                    <input name="new_email" class="user-input" type="text">
+                                </div>
+
+                                <div class="account-change">
+                                <button class="button-update">Cập nhật EMAIL</button>
+                                </div>
+                            </form>
+                        </div>         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+         if (cookies) {
+            const parseCoookie = JSON.parse(decodeURIComponent(cookies).split("=")[1])
+            const avtURI = parseCoookie.avatar || "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2020%2F08%2F04%2Fcream-golden-retriever-closeup-91607998-2000.jpg"
+            const username = parseCoookie.username
+            const gmail = parseCoookie.gmail || "vui lòng cập nhật email"
+
+            const uservat ="../../../public/image/avatar/"+avtURI 
+
+            const account_image = document.querySelector(".account_image")
+            const account_image2 = document.querySelector(".account_image2")
+            const account_username = document.querySelector(".account_username")
+
+            if (account_image && account_image2 && account_username) {
+                account_image.src=uservat
+                account_image2.src=uservat
+                account_username.innerHTML = username
+            }
+        
+        }
+
+
+        var listbar =  document.getElementById("user-listbar")
+        document.getElementById("user-menu__listbar").onclick = function(){
+            if(listbar.style.display != "none"){
+                listbar.style.display = "none"
+            }else{           
+                listbar.style.display = "block"
+            }
+        }
+        
+        function uploadimg(){
+            const uploadImage = (e) => {
+                    const avatar = document.getElementById("avatar-upload") 
+                    let reader = new FileReader()
+                    let img = new Image()
+
+                    reader.onload = () => {                        
+                        img.src = reader.result;
+                        avatar.src =  img.src
+                    }
+                    reader.readAsDataURL(e.target.files[0])
+                    
+            };
+            const imageLoader = document.getElementById('changeavt');
+            imageLoader.addEventListener("change", uploadImage);
+        }
+        uploadimg()
+    </script>

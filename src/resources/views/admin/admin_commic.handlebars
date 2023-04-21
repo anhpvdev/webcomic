@@ -35,7 +35,16 @@
                             <p>Thể loại</p>
                         </div>
                         <div class="newcomic-value">
-                            <input name="tag" type="text">
+                            <input name="tag" type="hidden" value="" id="tagcomic">
+                            <p id="showtagselect"></p>
+                            <div class="addtagbox">
+                                 <select id="caraddtag">
+                                    {{#each tag}}
+                                    <option value="{{this.tagid}}">{{this.tagname}}</option>
+                                     {{/each}}
+                                </select>
+                            <p id="checkaddtag">Thêm</p>
+                            </div>
                             {{!-- <div class="drop-tag__list row no-gutters">
                                 <div class="drop-tag__item ">
                                     <ul>
@@ -268,7 +277,6 @@
                         <button type="submit">Thêm mới</button>
                     </div>
                 </div>
-                
             </form>
             <div class="admin-listcomic">
                 <div class="listcomic-header">

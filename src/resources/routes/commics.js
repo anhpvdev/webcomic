@@ -12,6 +12,7 @@ const commicsRoutes = (app) => {
   // routes for render views
     router.get("/:id",checkauth, comicServices.showcomic)
     router.get("/chapter/:id",checkauth,user.getexp, comics.chapter)
+    router.get("/find/comic/?data=:id",comicServices.findcomic)
 
     router.post("/followcomic",userAuth,comics.followcomic)
     router.post("/unfollowcomic",userAuth,comics.unfollowcomic)

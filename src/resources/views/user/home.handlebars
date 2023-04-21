@@ -211,6 +211,12 @@
             <input type="text" id="inputbackground__link">
             <button id="inputbackground__action">ok</button>
         </div>
+        <div>
+            <h3>Độ mờ: (nhập 0 > 100)</h3>
+            <i>Background:</i>
+            <input type="text" id="inputbackground__opacity">
+            <button id="inputbackgroundopacity__action">ok</button>
+        </div>
     </div>
 </div>
 <script>
@@ -234,7 +240,8 @@
                 if(i==3){
                     listcontroller+=`<li class="page" id="another--page">...</li>`
                 }else{
-                     listcontroller+=`<a href="/?page=${i}" class="page">${i}</a>`
+                    
+                     listcontroller+=`<a id="${i}" class="page" onclick="changepage(this.id)">${i}</a>`
                 }
                
             }
@@ -245,8 +252,9 @@
 
     {{#if num}}
         console.log({{num}})
-        var __numpage = parseInt({{num}}/2)+1
-        addpagecontroller({{num}}/2)
+        var __numpage = parseInt({{num}}/20)+1
+        addpagecontroller({{num}}/20)
     {{/if}}
 </script>
+{{>script}}
 {{>footer}}

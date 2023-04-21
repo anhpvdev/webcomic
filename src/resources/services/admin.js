@@ -34,6 +34,16 @@ const adminServices = {
                 token: token
             }    
 
+            // const credential = {
+            //     token: token,
+            //     username: usernames,
+            //     fullname: fullname, 
+            //     createAt: createAt,
+            //     gmail: "",
+            //     avatar: "avatar",
+            //     gender: gender
+            // }
+
             const adminStatus = require("../sessions/adminStatus")
             // update admin status - admin_name
             adminStatus.admin_name = admin_name
@@ -44,11 +54,9 @@ const adminServices = {
     
     addcomic: (req, res) => { 
         const avt = req.file.filename
-        console.log(avt)
         const { name, author,tag} = req.body
-        console.log(name +"||"+author)
-
-
+        let listtag_value =""
+        console.log(listtag_value)
             // check name
         if (!name){
             return res.render("admin_commic", { message: "thiếu tên r"})
@@ -56,6 +64,19 @@ const adminServices = {
             // check password and confirm password is not the same
         if (!avt) {
             return res.render("admin_commic", { message: "Thiếu ảnh r đcmm"})
+        }
+
+        if(!tag){
+            return res.render("admin_commic", { message: "tag đâu đcmm"})
+        }else{
+            const listtag = tag.split(",") 
+            for(i=0;i<listtag.length-1;i++){
+            if(i==listtag.length-2){
+                listtag_value+="((SELECT max(id) FROM comics),"+ listtag[i] + ")"
+            }else{
+                listtag_value+="((SELECT max(id) FROM comics),"+ listtag[i] + "),"
+            }
+        }
         }
             // create connection to mysql
         const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
@@ -75,13 +96,18 @@ const adminServices = {
              // connected to mysql successfully
         const sql = `INSERT INTO comics(name,author,views,image) VALUES ('${name}', '${author}',0, '${avt}');`
         conToDb.query(sql, (err, result) => {
-            if (err) console.log(err)
+            if (err) return res.send(`Truyện:lỗi r lm,ao`)
 
-            const sqlupdate = `INSERT INTO lastupdatedcomic(id) VALUES((SELECT max(id) FROM comics));`
-            conToDb.query(sqlupdate, (err, update) => {
-                if (err) console.log(err)
-                conToDb.end() 
-                return res.send(`Truyện:${name} ____ đã được hêm`)
+            const sqltag = `INSERT INTO comics_tags(comicid,tagid) VALUES ${listtag_value};`
+            conToDb.query(sqltag, (err, tag) => {
+                if (err) return res.send(`Truyện:lỗi r lm,ao`)
+                
+                    const sqlupdate = `INSERT INTO lastupdatedcomic(id) VALUES((SELECT max(id) FROM comics));`
+                    conToDb.query(sqlupdate, (err, update) => {
+                        if (err) return res.send(`Truyện:lỗi r lm,ao`)
+                        conToDb.end() 
+                        return res.redirect('/admin/commic')
+                    })
             })
         })
             
@@ -110,9 +136,13 @@ const adminServices = {
             const id = result[0].id +1
             const idname = id +""
             fs.mkdir(path.join("./src/public/image/chapter",idname),{},err=>{
-                if(err) throw err
+                if(err){                   
+                    res.send(`lỗi r lmao`)
+                    throw err
+                }
                 conToDb.end() 
-                return res.send(`Chap mới đã được thêm`)
+                return res.redirect('/admin/commic')
+                
             })
            
         })
@@ -145,22 +175,18 @@ const adminServices = {
             console.log("Connected to mysql")
         })
              // connected to mysql successfully
-        const sql = `INSERT INTO chapters(comicid,name) VALUES ('${comic}','${name}');`
+        const sql = `INSERT INTO chapters(comicid,name,uri) VALUES ('${comic}','${name}',${listchap});`
         conToDb.query(sql, (err, result) => {
-            if (err) console.log(err)
+            if (err) return res.send(`Truyện:lỗi r lm,ao`)
 
-            const sqlimguri = `INSERT INTO chapterimages(chapterid ,uri) VALUES ((select max(id) FROM chapters),'${listchap}');`
-            conToDb.query(sqlimguri, (err, resulturi) => {
-                if (err) console.log(err)
-
-                const sqlupdate =`UPDATE lastupdatedcomic SET updatetime = now() WHERE id =${comic};`
-                conToDb.query(sqlupdate, (err, resulturi) => {
-                    if (err) console.log(err)
+            const sqlupdate =`UPDATE lastupdatedcomic SET updatetime = now() WHERE id =${comic};`
+            conToDb.query(sqlupdate, (err, resulturi) => {
+                if (err) return res.send(`Truyện:lỗi r lm,ao`)
                     
-                    conToDb.end()
-                    next()
-                })
+                conToDb.end()
+                next()
             })
+            
         })
     },
 
@@ -185,11 +211,12 @@ const adminServices = {
              // connected to mysql successfully
         const sqldelete = `DELETE FROM comics WHERE id=${comicid};`
         conToDb.query(sqldelete, (err, resultdelete) => {
-            if (err) console.log(err)            
+            if (err) return res.send(`Truyện:lỗi r lm,ao`)            
         })
         const sql = `SELECT * FROM comics;`
         conToDb.query(sql, (err, result) => {
-            if (err) console.log(err)
+            if (err) return res.send(`Truyện:lỗi r lm,ao`)
+
             conToDb.end() 
             return res.render("admin_commic", { isLoggedIn: true,comics:result})
         })
@@ -213,8 +240,14 @@ const adminServices = {
         const sql = `SELECT * FROM comics;`
         conToDb.query(sql, (err, result) => {
             if (err) console.log(err)
-            conToDb.end() 
-            return res.render("admin_commic", { isLoggedIn: true,comics:result})
+
+            const sqltag = `SELECT tagid,tagname FROM tags;`
+            conToDb.query(sqltag, (err, tags) => {
+                if (err) console.log(err)
+
+                conToDb.end() 
+                return res.render("admin_commic", { isLoggedIn: true,comics:result,tag:tags})
+            })
         })
     }
 

@@ -55,23 +55,21 @@ document.getElementById("showsetting--exit").onclick = function(){
         s=true
 }
 
-document.getElementById("another--page").onclick = function(){
-    document.getElementById("showanotherpage").style.display='block'
-    let numclick = 0
-    document.body.onclick = function(){
-        if(numclick!=0){
-            console.log("lo nhập đi em")
-        }else{
-            numclick++
+var anotherpagecontroller = document.getElementById("another--page")
+if(anotherpagecontroller){
+    document.getElementById("another--page").onclick = function(){
+        document.getElementById("showanotherpage").style.display='block'
+        let numclick = 0
+        document.body.onclick = function(){
+            if(numclick!=0){
+                console.log("lo nhập đi em")
+            }else{
+                numclick++
+            }
         }
     }
 }
 
-function checkclick(){
-    document.body.onclick = function(){
-        console.log("lo nhập đi em")
-    }
-}
 
 document.getElementById("changepage").onclick = function(){
     var inputpage = document.getElementById("pageInput").value
@@ -83,44 +81,9 @@ document.getElementById("changepage").onclick = function(){
         }else if(inputpage>__numpage || inputpage <0){
             alert("làm đếch j có trang "+inputpage)
         }else{
-            let newurl = __url+"?page="+inputpage
-            window.location.replace(newurl)
+            changepage(inputpage)
         }
 }
-
-
-var cout=0
-function settime(cout){
-        switch(cout){
-            case 200:
-                document.getElementById("main__topcomic").style.transform =  'translate3d(-webkit-calc(var(--animation-comic) *1), 0px, 0px)' ;
-                break;
-            case 400:
-                document.getElementById("main__topcomic").style.transform =  'translate3d(-webkit-calc(var(--animation-comic) *2), 0px, 0px)' ;
-                break ;   
-            case 600:
-                document.getElementById("main__topcomic").style.transform =  'translate3d(-webkit-calc(var(--animation-comic) *3), 0px, 0px)' ;
-                break ;
-            case 800:
-                document.getElementById("main__topcomic").style.transform =  'translate3d(-webkit-calc(var(--animation-comic) *4), 0px, 0px)' ;
-                break ;
-            case 1000:
-                document.getElementById("main__topcomic").style.transform =  'translate3d(-webkit-calc(var(--animation-comic) *5), 0px, 0px)' ;
-                break ;  
-            default: 
-                document.getElementById("main__topcomic").style.transform =  'translate3d(-webkit-calc(var(--animation-comic) *0), 0px, 0px)' ;  
-        }
-}
-
-
-setInterval(() => {
-    settime(cout);
-    cout = cout +200
-    if(cout>1000){
-        cout=0;
-    }
-    
-}, 2000);
 
 
 document.getElementById("nextright").onclick = function(){
@@ -137,12 +100,17 @@ document.getElementById("nextleft").onclick = function(){
 
 
 document.getElementById("dashboad").onclick =function(){
-    window.scrollTo(0,0)
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
 }
 
 
 var __background = document.getElementById("inputbackground");
 var __backgroundlink = document.getElementById("inputbackground__action");
+var __backgroundopacity = document.getElementById("inputbackgroundopacity__action")
 
 __background.addEventListener('change', (event) => {
     const image = event.target.files[0];
@@ -165,59 +133,51 @@ __backgroundlink.onclick = function(){
     changebackground()
 };
 
-function changebackground(){
-    var __viewweb = document.getElementById("background")
-    console.log(__viewweb.getAttribute("style"))
-    const background_img = localStorage.getItem('background');
-    const linkbackground = "background-image: url(" + background_img + ")"
-    if (background_img) {
-        __viewweb.setAttribute("style",linkbackground)
-    } else {
-        __viewweb.setAttribute("style","")
+__backgroundopacity.onclick = function(){
+    var opacity = document.getElementById("inputbackground__opacity").value
+    if (isNaN(opacity)){
+        alert("nhập số vào dcmm");
+    }else{
+        if(opacity<0 || opacity >100){
+            alert("nhập sai r dcmm");
+        }else{
+            opacity =100- opacity  
+            localStorage.setItem('opacity',opacity);
+            console.log("upload opacity success  "+opacity)
+            changebackground()
+        }
     }
 
+};
+
+
+function changebackground(){
+    var __viewweb = document.getElementById("background")
+    const background_img = localStorage.getItem('background')
+    const background_opacity = localStorage.getItem('opacity')
+    // const linkbackground = "background-image: url(" + background_img + ");"
+    // const opacitybackground = "opacity:"+background_opacity+"%"
+    if (background_img) {
+        if (background_opacity) {
+            const backgroundcss = "background-image: url(" + background_img + ");opacity:"+background_opacity+"%"
+            __viewweb.setAttribute("style",backgroundcss)
+            console.log(backgroundcss)
+        }else{
+            const backgroundcss = "background-image: url(" + background_img + ");"
+            __viewweb.setAttribute("style",backgroundcss)
+            console.log(backgroundcss)
+        }
+    }else {
+        if (background_opacity) {
+            const backgroundcss = "opacity:"+background_opacity+"%"
+            __viewweb.setAttribute("style",backgroundcss)
+            console.log(backgroundcss)
+        }else{
+            __viewweb.setAttribute("style","")
+        }
+    }
 
 }
 if(localStorage.getItem('background')){
     changebackground()
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//setInterval(() => {
-    //     if(cout==0){
-    //         setTimeout(() => {
-    //             settime(cout);
-    //             cout = cout +200
-    //             console.log(cout)
-    //             if(cout>1000){
-    //                 cout=0;
-    //             }
-                
-    //         }, 5000);
-    //     }
-    //     else{
-    //         settime(cout);
-    //         cout = cout +200
-    //         console.log(cout)
-    //         if(cout>1000){
-    //             cout=0;
-    //         }
-    //     }
-        
-    // }, 2000);
-
-
-
-

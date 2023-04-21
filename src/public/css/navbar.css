@@ -100,25 +100,20 @@
 
 .drop-category__list{
     padding: 20px 0px;
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 
-.drop-category__item{
 
-}
-
-.drop-category__item > ul > li{
-    list-style: none;
-}
-
-.drop-category__item > ul > li > a{
+.drop-category__item > a{
     text-decoration: none;
     line-height: 30px;
     color: black;
+    padding: 20px;
 }
 
-.drop-category__item > ul > .item__red >a{
-    color: rgb(238, 24, 24);
-    font-weight: bold;
+.drop-category__item > a:hover{
+    color: red;
 }
 /* ---------------------------- -------------*/
 

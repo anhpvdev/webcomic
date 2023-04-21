@@ -15,8 +15,9 @@ const adminRoutes = (app) => {
         res.redirect('/admin/login')
     })
     router.get("/commic", adminAuth, adminServices.admincomic)
-    router.get("/chapter/:id", (req, res) => {
-        res.render("admin_chapter", { isLoggedIn: true ,comic:req.params.id})
+
+    router.get("/chapter/:id",adminAuth, (req, res) => {
+        res.render("admin_chapter",{ isLoggedIn: true ,comic:req.params.id})
     })
     // services
     router.post("/login", adminServices.login)

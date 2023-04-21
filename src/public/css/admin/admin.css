@@ -88,7 +88,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    
     font-size: 20px;
     padding: 0px 20px;
     height: 40px;
@@ -104,51 +103,6 @@
     border: 1px solid red;
     color: red;
     box-shadow: 0px 0px 10px;
-}
-
-
-
-
-/* .addcomic-list___tag{
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%,0);
-    background-color: aliceblue;
-    border-radius: 10px;
-    display: none;
-} */
- 
-
-.drop-tag__list{
-    display: flex;
-    flex-wrap: nowrap;
-    font-size: 15px;
-    border: 1px solid white;
-    
-}
-
-.drop-tag__list>.drop-tag__item{
-    width:180px;
-   
-}
-
-.drop-tag__item>ul{
-    padding: 0px 20px;
-    border: 1px solid white;
-}
-
-.drop-tag__item > ul > li{
-    list-style: none;
-    display: flex;
-    
-}
-
-
-.drop-tag__item > ul > li > p{
-    line-height: 30px;
-    color: white;
-    padding-left: 10px;
 }
 
 .admin-addcomic > .add___comic{
@@ -284,4 +238,44 @@
     margin: 20px;
     height: 40px;
     width: 100px;
+}
+
+
+
+
+.addtagbox{
+    display: flex;
+}
+.addtagbox >select{
+    width: 150px;
+    border-radius: 20px;
+}
+
+.addtagbox >p{
+    border: 1px solid red;
+    margin: 0px 20px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #8f8f8f;
+    cursor: pointer;
+    color: yellow;
+}
+
+.addtagbox >p:hover{
+    box-shadow: 0px 0px 25px red;
+    color: red;
+    background-color: black;
+}
+
+
+.newcomic-value>#showtagselect{
+    flex:1;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid yellow;
+    height: 40px;
+    color: white;
+    font-size: 20px;
+    width: 100%;
+    line-height: 40px;
 }

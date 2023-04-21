@@ -14,6 +14,7 @@ const userupload = require("../middlewares/upload/User_avatar");
 const userRoutes = (app) => {
   router.get('/',checkauth,comicServices.allcomic)
   router.get('/?page=:id',checkauth,comicServices.allcomic)
+  router.get('/seachcomic',comicServices.findcomic)
   router.get("/login", (req, res) => { res.render("login") } )
   router.get("/register", (req, res) => { res.render("register") })
   router.get("/authEmail", (req, res) => res.render("authEmail"))
@@ -43,6 +44,7 @@ const userRoutes = (app) => {
   router.post("/login", userServices.login)
   router.post("/forgetPassword", userServices.forgetPassword)
   router.post("/forgetPassword/code", userServices.forgetPasswordCode)
+
   return app.use("/", router)
 }
 module.exports = userRoutes

@@ -546,7 +546,7 @@
 }
 
 .member--info__leve{
-    width: 35px;
+    width: 60px;
     height: 18px;
     border-radius: 3px;
     text-align: center;
@@ -635,7 +635,6 @@
     border: 1px solid #515151;
 }
 
-.page:first-child,
 .page:hover{
     border: 1px solid rgb(255, 140, 0);
     color: rgb(255, 140, 0);

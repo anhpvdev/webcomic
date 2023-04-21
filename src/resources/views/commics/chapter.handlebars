@@ -4,49 +4,17 @@
             <div class="chapter--header__menu">
                 <a href=""><i class="fa-solid fa-caret-left"></i></a>
                 <select>
-                    <option value="">chap {{chapter.name}}<option>
+                    <option value="">{{chapter.name}}<option>
                 </select>
                 <a href=""><i class="fa-solid fa-caret-right"></i></a>
             </div>
             <div class="chapter--header__list">
                 {{#each chapter.uri}}
                     <div class="chapter--header__item">
-                        <img class="item" src="/public/image/chapter/{{../chapter.chapterid}}/{{this}}" alt="">
+                        <img class="item" src="/public/image/chapter/{{../chapter.id}}/{{this}}" alt="">
                     </div>
                 {{/each}}
             </div>
         </div>
     </div>
 {{>footer}}
-<script>
-    const imgnumber = {{numberimg}}
-    const chapter = {{chapter}}
-    var stylenumber ={{style}}
-    const list = document.querySelector(".chapter--header__list")
-    if(stylenumber==1) {
-        const styleimg="jpg"
-        if(imgnumber){
-        var listimg=[]
-            for(let i=1; i <= imgnumber; i++){
-                listimg +=`<div class="chapter--header__item">
-                                <img class="item" src="/public/image/chapter/${chapter}/${i}.${styleimg}" alt="">
-                            </div>`
-                
-            }
-            list.innerHTML =listimg
-        }
-    }else if (stylenumber==2) {
-        const styleimg="png"
-        if(imgnumber){
-            var listimg=[]
-            for(let i=1; i <= imgnumber; i++){
-                listimg +=`<div class="chapter--header__item">
-                                <img class="item" src="/public/image/chapter/${chapter}/${i}.${styleimg}" alt="">
-                            </div>`
-                
-                }
-            list.innerHTML =listimg
-        }
-    }
-    
-</script>

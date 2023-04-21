@@ -72,6 +72,7 @@
     color: white;
     font-weight: bold;
     font-size: 15px;
+    margin: 20px 0px;
 }
 
 .comic-detail__follow > .follow{
@@ -79,6 +80,7 @@
     border: none;
     border-radius: 5px;
     width: 100px;
+    margin-left: 25px;
 
 }
 
@@ -90,10 +92,10 @@
 
 }
 
-.comic-detail__read > button{
+.comic-detail__read >a{
     background-color: rgb(244, 173, 41);
-    width: 120px;
-    margin-right:20px;
+    margin:20px;
+    padding: 10px;
 }
 
 

@@ -39,7 +39,13 @@
                                 <i class="fa-solid fa-tag"></i>
                                 <p>Thể loại:</p>
                             </div>
-                            <p><a href="">{{comics.tag}}</a> </p>
+                            <p>
+                                {{#each comics.listtag}}
+                                    {{#with this}}
+                                    <a href="/tag/{{tagid}}">{{tagname}}</a>;
+                                    {{/with}}
+                                {{/each}}
+                            </p>
                         </div>
                         <div class="comic-detail__view row">
                             <div>
@@ -59,8 +65,8 @@
                         </form>
                         {{/if}}
                         <div class="comic-detail__read">
-                            <button class="comic-button firstchapter">Đọc từ đầu</button>
-                            <button class="comic-button lastchapter">Đọc mới nhất</button>
+                            <a href="/commic/chapter/{{comics.minid}}" class="comic-button firstchapter">Đọc từ đầu</a>
+                            <a href="/commic/chapter/{{comics.maxid}}" class="comic-button lastchapter">Đọc mới nhất</a>
                         </div>
                     </div>    
                 </div>

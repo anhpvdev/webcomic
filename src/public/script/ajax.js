@@ -150,41 +150,73 @@ function unfollowcomic(idcomic){
 }
 
 
-function sendcommentcomic(topicid){
-    console.log(topicid)
+function checkcmt(e,rep,repid){
+    let nowtime = (new Date().toLocaleDateString()) +"  "+ (new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"}))
+    if(e){
+        if(rep==true){
+            let newcomment = `<div class="repcmt--item">
+                <div class="comment-item__avt">
+                    <img src="../../../public/image/avatar/${avtURI}" alt="">
+                </div>
+                <div class="comment-item__content">
+                    <div class="content_name">
+                        <p>${username}<span>${nowtime}</span></p>
+                    </div>
+                    <div class="content_cmt">
+                        <p>${document.getElementById(`maincontent-${repid}`).value}</p>
+                    </div>
+                </div>
+            </div>`
+            document.getElementById(`repcmtlist-${repid}`).innerHTML +=newcomment
+            
+            document.getElementById(`maincontent-${repid}`).value=""
+        }else{
+            
+            let newcomment = `<div class="comment-item">
+                    <div class="comment-item__avt">
+                        <img src="../../../public/image/avatar/${avtURI}" alt="">
+                    </div>
+                    <div class="comment-item__content">
+                        <div class="content_name">
+                            <p>${username}<span>${nowtime}</span></p>
+                        </div>
+                        <div class="content_cmt">
+                            <p>${document.getElementById("maincontent-cmt").value}</p>
+                        </div>
+                    </div>
+                </div>`
+                document.querySelector(".comment-list").innerHTML =newcomment+document.querySelector(".comment-list").innerHTML
+                document.getElementById(`maincontent-cmt`).value=""
+            }
+    }else{
+        alert("đéo cmt được")
+    }
+}
+
+function sendcommentcomic(topicid,parentid,rep){
+    console.log(rep)
     let content = document.getElementById("maincontent-cmt").value
+    if(rep==true){
+        content = document.getElementById(`maincontent-${parentid}`).value
+    }
     const cookies = document.cookie
+
     if(content){
         if (cookies) {
-            $.ajax({
-                type: "POST",
-                url: `/comic/comment`,
-                data:{
-                    topicid:topicid,
-                    content: content,
-                    parentid:""
-                },
-            })
-        
-       
 
+                $.ajax({
+                    type: "POST",
+                    url: `/comic/comiccomment`,
+                    data:{
+                        topicid:topicid,
+                        content: content,
+                        parentid:parentid
+                    },
+                    success: function(data){
+                        checkcmt(data,rep,parentid)
+                    }
+                })
 
-
-            // let nowtime = (new Date().toLocaleDateString()) +"  "+ (new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"}))
-            // let newcomment = `<div class="comment-item">
-            //     <div class="comment-item__avt">
-            //         <img src="../../../public/image/avatar/${avtURI}" alt="">
-            //     </div>
-            //     <div class="comment-item__content">
-            //         <div class="content_name">
-            //             <p>${username}<span>${nowtime}</span></p>
-            //         </div>
-            //         <div class="content_cmt">
-            //             <p>${document.getElementById("maincontent-cmt").value}</p>
-            //         </div>
-            //     </div>
-            // </div>`
-            // document.querySelector(".comment-list").innerHTML =newcomment+document.querySelector(".comment-list").innerHTML
         }else{
             alert("đăng nhập đi eim")
         }
@@ -192,4 +224,37 @@ function sendcommentcomic(topicid){
         alert("nhập gì đi eim")
     }
 }
+
+function sendcommentchapter(topicid,parentid,rep){
+    console.log(rep)
+    let content = document.getElementById("maincontent-cmt").value
+    if(rep==true){
+        content = document.getElementById(`maincontent-${parentid}`).value
+    }
+    const cookies = document.cookie
+
+    if(content){
+        if (cookies) {
+
+                $.ajax({
+                    type: "POST",
+                    url: `/comic/chaptercomment`,
+                    data:{
+                        topicid:topicid,
+                        content: content,
+                        parentid:parentid
+                    },
+                    success: function(data){
+                        checkcmt(data,rep,parentid)
+                    }
+                })
+
+        }else{
+            alert("đăng nhập đi eim")
+        }
+    }else{
+        alert("nhập gì đi eim")
+    }
+}
+
 

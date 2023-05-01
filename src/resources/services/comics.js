@@ -97,21 +97,32 @@ const comic = {
                 listchap[0].listid=(JSON.parse(listchap[0].listid))
                 listchap[0].listtag=(JSON.parse(listchap[0].listtag))
 
-                if(currentId){
-                    const sqlflc =`SELECT * FROM userfollowingcomics WHERE comicid=${req.params.id} and userid=${currentId};`
-                    conToDb.query(sqlflc, (err, resuilfollow) => {
+                const sqlcmt =`SELECT cmt.id,cmt.parent_id,cmt.topic_id,cmt.user_id,cmt.content,DATE_FORMAT(cmt.timestampe, '%H:%i  %d-%m-%Y') as timecmt,users.avatar,users.username,users.fullname FROM comics__comment as cmt LEFT JOIN users ON cmt.user_id = users.userid WHERE cmt.topic_id = '${listchap[0].topiccomment_id}'  AND cmt.parent_id is null ORDER BY cmt.timestampe DESC;`
+                    conToDb.query(sqlcmt, (err, resuilcmt) => {
                         if (err) console.log(err)
-            
-                        conToDb.end() 
-                        if(resuilfollow[0]){
-                            return res.render('comic', { cookies: cookies,comics: listchap[0],userid:currentId,follow:true})
-                        }else{
-                            return res.render('comic', { cookies: cookies,comics: listchap[0],userid:currentId,follow:false})
-                        }
+
+                        const sqlrepcmt =`SELECT cmt.id,cmt.parent_id,cmt.topic_id,cmt.user_id,cmt.content,DATE_FORMAT(cmt.timestampe, '%H:%i  %d-%m-%Y') as timecmt,users.avatar,users.username,users.fullname FROM comics__comment as cmt LEFT JOIN users ON cmt.user_id = users.userid WHERE cmt.topic_id = '${listchap[0].topiccomment_id}'  AND cmt.parent_id is not null ORDER BY cmt.timestampe;`
+                        conToDb.query(sqlrepcmt, (err, resuilrepcmt) => {
+                            if (err) console.log(err)
+                            
+                            if(currentId){
+                                const sqlflc =`SELECT * FROM userfollowingcomics WHERE comicid=${req.params.id} and userid=${currentId};`
+                                conToDb.query(sqlflc, (err, resuilfollow) => {
+                                    if (err) console.log(err)
+                        
+                                    conToDb.end() 
+                                    if(resuilfollow[0]){
+                                        return res.render('comic', { cookies: cookies,comics: listchap[0],userid:currentId,follow:true,comment:resuilcmt,repcomment:resuilrepcmt})
+                                    }else{
+                                        return res.render('comic', { cookies: cookies,comics: listchap[0],userid:currentId,follow:false,comment:resuilcmt,repcomment:resuilrepcmt})
+                                    }
+                                })
+                            }else{
+                                return res.render('comic', { cookies: cookies,comics: listchap[0],follow:false,comment:resuilcmt,repcomment:resuilrepcmt})
+                            }
+                        })
+
                     })
-                }else{
-                    return res.render('comic', { cookies: cookies,comics: listchap[0],follow:false})
-                }
             }else{
                 res.redirect("/")
             }
@@ -125,7 +136,7 @@ const comic = {
 
         const idcomic = req.params.comic
         const idchap = req.params.id
-        console.log(idchap + "||" +idcomic)
+        
         const conToDb = mysql.createConnection({
             host: HOST || "localhost",
             user: USER || "sa",
@@ -142,33 +153,45 @@ const comic = {
                // connected to mysql successfully
                const sql = `select c.*,lc.listid as listchap from chapters as c LEFT JOIN ( SELECT cm.id ,CONCAT("[",GROUP_CONCAT(comic SEPARATOR','),"]") AS listid FROM comics as cm LEFT JOIN(SELECT comicid, JSON_OBJECT("id", id, "name", NAME) AS comic FROM chapters ) AS ch ON ch.comicid = cm.id WHERE cm.id =${idcomic} )as lc ON lc.id = c.comicid WHERE c.id = ${idchap};`
                conToDb.query(sql, (err, result) => {
-                   if (err) console.log(err)
-                   console.log(result)
-                       if(result[0]){
-                           result[0].uri=result[0].uri.split(",")
-                           result[0].listchap=(JSON.parse(result[0].listchap))
-                           // const sqlview =`UPDATE comics SET views = views + 1 WHERE id=${idcomic}`
-                           // conToDb.query(sqlview, (err, views) => {
-                           //     if (err) console.log(err)
-   
-                           //     if(userid){
-                           //         const sqlhistory =`INSERT INTO userreadchapters (userid,chapterid) VALUES (${userid}, ${req.params.id})`
-                           //         conToDb.query(sqlhistory, (err, read) => {
-                           //             if (err) res.render("chapter",{ cookies: true ,chapter: result[0]})
-   
-                           //             conToDb.end() 
-                           //             res.render("chapter",{ cookies: true ,chapter: result[0]})
-                           //         })
-                               
-                           //     }else{
-                           //         conToDb.end() 
-                           //         res.render("chapter",{ cookies: false ,chapter: result[0]})
-                           //     }
-                           // })
-                           res.render("chapter",{ cookies: true ,chapter: result[0]})
-                       }else{
-                           res.redirect("/")
-                       }
+                    if (err) console.log(err)
+
+                    if(result[0]){
+                        result[0].uri=result[0].uri.split(",")
+                       result[0].listchap=(JSON.parse(result[0].listchap))
+
+                       const sqlcmt =`SELECT cmt.id,cmt.parent_id,cmt.topic_id,cmt.user_id,cmt.content,DATE_FORMAT(cmt.timestampe, '%H:%i  %d-%m-%Y') as timecmt,users.avatar,users.username,users.fullname FROM chapters__comment as cmt LEFT JOIN users ON cmt.user_id = users.userid WHERE cmt.topic_id = '${result[0].topiccomment_id}'  AND cmt.parent_id is null ORDER BY cmt.timestampe DESC;;`
+                       conToDb.query(sqlcmt, (err, resuilcmt) => {
+                           if (err) console.log(err)
+
+                           const sqlrepcmt =`SELECT cmt.id,cmt.parent_id,cmt.topic_id,cmt.user_id,cmt.content,DATE_FORMAT(cmt.timestampe, '%H:%i  %d-%m-%Y') as timecmt,users.avatar,users.username,users.fullname FROM chapters__comment as cmt LEFT JOIN users ON cmt.user_id = users.userid WHERE cmt.topic_id = '${result[0].topiccomment_id}' AND cmt.parent_id is not null ORDER BY cmt.timestampe;`
+                            conToDb.query(sqlrepcmt, (err, resuilrepcmt) => {
+                                if (err) console.log(err)
+
+                                
+                                // const sqlview =`UPDATE comics SET views = views + 1 WHERE id=${idcomic}`
+                                // conToDb.query(sqlview, (err, views) => {
+                                //     if (err) console.log(err)
+        
+                                //     if(userid){
+                                //         const sqlhistory =`INSERT INTO userreadchapters (userid,chapterid) VALUES (${userid}, ${req.params.id})`
+                                //         conToDb.query(sqlhistory, (err, read) => {
+                                //             if (err) res.render("chapter",{ cookies: true ,chapter: result[0]})
+        
+                                //             conToDb.end() 
+                                //             res.render("chapter",{ cookies: true ,chapter: result[0]})
+                                //         })
+                                    
+                                //     }else{
+                                //         conToDb.end() 
+                                //         res.render("chapter",{ cookies: false ,chapter: result[0]})
+                                //     }
+                                // })
+                                res.render("chapter",{ cookies: true ,chapter: result[0],comment:resuilcmt,repcomment:resuilrepcmt})
+                            })
+                        })
+                    }else{
+                        res.redirect("/")
+                    }
                })
         }
     },
@@ -196,7 +219,7 @@ const comic = {
                const sql = `select * from chapters where id = ${idchap};`
                conToDb.query(sql, (err, result) => {
                    if (err) console.log(err)
-                   console.log(result)
+                   
                        if(result[0]){
                            result[0].uri=result[0].uri.split(",")
                            return res.render("changechapter",{ cookies: true ,chapter: result[0]})
@@ -283,14 +306,12 @@ const comic = {
            res.render("followcomic_Detail",{listfollow:result,cookies: true})
         })
     },
-    comment: (req,res) =>{
+    comiccomment: (req,res) =>{
         const{content,topicid,currentId,parentid}=req.body
         console.log(req.body)
         const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
         const mysql = require("mysql");
-        if(!parentid){
-            console.log("lmaoooo")
-        }
+        
         const conToDb = mysql.createConnection({
         host: HOST || "localhost",
         user: USER || "sa",
@@ -304,7 +325,47 @@ const comic = {
         })
         // connected
         // query
+        let newcmt = `INSERT INTO comics__comment ( parent_id, topic_id, user_id, content) VALUES (${parentid}, '${topicid}', ${currentId}, '${content}')`
+        if(!parentid){
+            newcmt =  `INSERT INTO comics__comment ( parent_id, topic_id, user_id, content) VALUES (NULL, '${topicid}', ${currentId}, '${content}')`
+        }
+       
+        conToDb.query(newcmt, (err, comment) => {
+            if (err) return res.send(false)
 
+            return res.send(true)
+        })
+    },
+    chaptercomment: (req,res) =>{
+        const{content,topicid,currentId,parentid}=req.body
+        console.log(req.body)
+        const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
+        const mysql = require("mysql");
+        
+        const conToDb = mysql.createConnection({
+        host: HOST || "localhost",
+        user: USER || "sa",
+        password: PASSWORD || "123123",
+        database: DATABASE || "QUANLYNHANSU"
+        })
+
+        conToDb.connect((err) => {
+        if (err) throw err;
+        console.log("Connected to mysql")
+        })
+        // connected
+        // query
+        let newcmt = `INSERT INTO chapters__comment ( parent_id, topic_id, user_id, content) VALUES (${parentid}, '${topicid}', ${currentId}, '${content}')`
+        if(!parentid){
+            newcmt =  `INSERT INTO chapters__comment ( parent_id, topic_id, user_id, content) VALUES (NULL, '${topicid}', ${currentId}, '${content}')`
+        }
+
+        console.log(newcmt)
+        conToDb.query(newcmt, (err, comment) => {
+            if (err) return res.send(false)
+
+            return res.send(true)
+        })
     },
     findcomic: (req, res) => {
        var textfind =req.query.find

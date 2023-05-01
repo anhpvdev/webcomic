@@ -19,7 +19,66 @@
                     </div>
                 {{/each}}
             </div>
+           <div class="comic-comment">
+           <div class="comment-form">
+                <div>
+                    <textarea id="maincontent-cmt" wrap="hard"></textarea>
+                   <div>
+                     <button onclick="sendcommentchapter('{{chapter.topiccomment_id}}',null,false)">Gửi</button>
+                   </div>
+                </div>
+           </div>
+           <div class="comment-list">
+                {{#each comment}}               
+                <div class="comment-item">
+                    <div class="comment-item__avt">
+                        <img src="../../../public/image/avatar/{{this.avatar}}" alt="">
+                    </div>
+                    <div class="comment-item__content">
+                        <div class="content_name">
+                            <p>{{this.username}}<span>{{this.timecmt}}</span></p>
+                        </div>
+                        <div class="content_cmt">
+                            <p>{{this.content}}</p>
+                        </div>
+                         <div class="content_rep">
+                            <button onclick="showreply('rep-{{this.id}}')">Trả lời</button>
+                        </div>
+                        <div class="reply" id="rep-{{this.id}}">
+                            <div class="rep-comment">
+                                    <textarea id="maincontent-{{this.id}}" wrap="hard"></textarea>
+                                <div>
+                                    <button onclick="sendcommentchapter('{{../chapter.topiccomment_id}}',{{this.id}},true)">Gửi</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="repcmtlist" id="repcmtlist-{{this.id}}">
+                            {{#each ../repcomment}}
+                             {{#same this.parent_id ../this.id}}
+                            <div class="repcmt--item">
+                                <div class="comment-item__avt">
+                                    <img src="../../../public/image/avatar/{{this.avatar}}" alt="">
+                                </div>
+                                <div class="comment-item__content">
+                                    <div class="content_name">
+                                        <p>{{this.username}}<span>{{this.timecmt}}</span></p>
+                                    </div>
+                                    <div class="content_cmt">
+                                        <p>{{this.content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/same}}
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                 {{/each}}
+           </div>
         </div>
+        </div>
+        </div>
+        
     </div>
     <script>
         const select = document.getElementById('listselectchap');

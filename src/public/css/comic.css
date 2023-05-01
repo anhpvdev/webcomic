@@ -213,23 +213,51 @@
 
 .comment-item{
     display: flex;
-    padding: 20px 0px;
+    padding: 20px 0px 0px 0px;
     border-top: 3px dotted yellow;
 }
 
-.comment-item > .comment-item__avt{
+.repcmt--item{
+    display: flex;
+    padding: 10px 0px;
+    border-top: 3px dotted yellow;
+}
+.reply{
+    display: none;
+}
+.rep-comment{
+    display: flex;
+
+}
+
+.rep-comment>textarea{
+    flex: 1;
+    height: 60px;
+    padding: 10px;
+    margin: 10px 0px;
+}
+.rep-comment >div {
+    margin: 25px;
+}
+
+.rep-comment >div >button{
+    width: 50px;
+    PADDING: 5PX;
+}
+
+.comment-item__avt{
     width: 50px;
     height: 50px;
     border-radius: 100em;
     overflow: hidden;
 }
 
-.comment-item > .comment-item__avt>img{
+.comment-item__avt>img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.comment-item > .comment-item__content{
+.comment-item__content{
     flex: 1;
     padding: 0px 20px;
 }
@@ -246,4 +274,11 @@
 .content_cmt{
     font-size: 15px;
     color: white;
+}
+.content_rep {
+    padding: 20px;
+}
+
+.content_rep >button{
+    font-size: 20px;
 }

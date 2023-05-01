@@ -16,7 +16,8 @@ const commicsRoutes = (app) => {
     router.get("/category/:id&:numpage", comicServices.seachcategory)
     router.post("/followcomic",userAuth,comics.followcomic)
     router.post("/unfollowcomic",userAuth,comics.unfollowcomic)
-    router.post("/comment",userAuth,comics.comment)
+    router.post("/comiccomment",userAuth,comics.comiccomment)
+    router.post("/chaptercomment",userAuth,comics.chaptercomment)
 
     return app.use("/comic", router)
 }

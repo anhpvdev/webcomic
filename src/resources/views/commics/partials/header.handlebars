@@ -7,8 +7,21 @@
             </div>
             <div class="container-seach col l-5 m-5 c-0">
                <div class="container-seach__input">
-                    <input type="text" placeholder="Tìm truyện...">
+                    <input type="text" placeholder="Tìm truyện..." id="findcomic">
                     <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="listfindcomic" id="listfindcomic">
+                        <ul id="show--comicfind">
+                            <li class="findcomic--item">
+                                    <div class="findcomic--item__img">
+                                        <a href="/commic/"><img src="/public/image/comic/bluf.jpg" alt="top truyen"></a>
+                                    </div>
+                                    <div class="findcomic--item__info">
+                                        <a href="/commic/{{this.id}}">hảo hán pasdasdasas asdsadasd asdasdasdas asdasdasda asdasdasdasd ádasasđ asdasdasd asdasdas hương nào</a>
+                                        
+                                    </div>
+                            </li>
+                        </ul>
+                    </div>
                </div>
             </div>
             <div class="container-notification col l-2 m-2">
@@ -152,22 +165,22 @@
         <div class="navbar-nav grid wide">
             <ul class=navbar-list>
                 <li class="navbar-list__home" >
-                    <a href="#" id="home" class="home">
+                    <a href="/" id="home" class="home">
                         <i class="fa-solid fa-house-chimney"></i>
                     </a>
                 </li>
                 <li class="navbar-list__item">
-                    <a href="#" class="setcolor">
+                    <a href="/hot" class="setcolor">
                         <i>HOT</i>
                     </a>
                 </li>
                 <li class="navbar-list__item">
-                    <a href="#" class="setcolor">
+                    <a href="/follow" class="setcolor">
                         <i>THEO DÕI</i>
                     </a>
                 </li>
                 <li class="navbar-list__item">
-                    <a href="#" class="setcolor">
+                    <a href="/history" class="setcolor">
                         <i>LỊCH SỬ</i>
                     </a>
                 </li>
@@ -176,185 +189,109 @@
                         <span>THỂ LOẠI</span>
                         <i class="fa-solid fa-caret-down"></i>
                     </a>
-                    <ul class="drop-category grid wide">
-                        <div class="drop-category__list row no-gutters">
-                            <div class="drop-category__item col l-3 m-3">
-                                <ul>
-                                    <li class="item__red">
-                                        <a href="#" title="">Tất cả</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Action</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Adult</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Adventure</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Anime</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Chuyển Sinh</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Comedy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Comic</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Cooking</a>
-                                    </li>
-                                    <li class="item__red">
-                                        <a href="#" title="">Cổ Đại</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Doujinshi</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Drama</a>
-                                    </li>
-                                    <li class="item__red">
-                                        <a href="#" title="">Đam Mỹ</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="drop-category__item col l-3 m-3">
-                                <ul>
-                                    <li>
-                                        <a href="#" title="">Ecchi</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Fantasy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Gender Bender</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Harem</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Historical</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Horror</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Josei</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Live Action</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Manga</a>
-                                    </li>
-                                    <li class="item__red">
-                                        <a href="#" title="">Manhhua</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Manhwa</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Martial Arts</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Mature</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="drop-category__item col l-3 m-3">
-                                <ul>
-                                    <li>
-                                        <a href="#" title="">Mecha</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Mystery</a>
-                                    </li>
-                                    <li class="item__red">
-                                        <a href="#" title="">Ngôn Tình</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">One Shot</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Osychological</a>
-                                    </li>
-                                    <li class="item__red">
-                                        <a href="#" title="">Romance</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">School Life</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Sci-fi</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Seinen</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Shoujo</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Shoujo AI</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Shounen</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Shounen Ai</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="drop-category__item col l-3 m-3">
-                                <ul>
-                                    <li>
-                                        <a href="#" title="">Slice of Life</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Smut</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Soft Yaoi</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Soft Yuri</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Sports</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Supernatural</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Thiếu Nhi</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Tragedy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Trinh Thám</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Truyện Scan</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Truyện Màu</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="">Webtoon</a>
-                                    </li>
-                                    <li class="item__red">
-                                        <a href="#" title="">Xuyên Không</a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <div class="drop-category grid wide">
+                        <div class="drop-category__list">
+                            <div class="drop-category__item" >
+                                        <p onclick="seachcategory(1,1)">Manga</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(2,1)">Manhua</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(3,1)">Manhwa</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(4,1)">Action</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(5,1)">Adult</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(6,1)">Adventure</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(7,1)">Chuyển Sinh</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(8,1)">Comedy</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(9,1)">Cooking</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(10,1)">Cổ Đại</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(11,1)">Drama</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(12,1)">Đam Mỹ</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(13,1)">Bách Hợp</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(14,1)">Ecchi</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(15,1)">Fantasy</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(16,1)">Gender Bender</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(17,1)">Harem</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(18,1)">Horror</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(19,1)">Mecha</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(20,1)">Mystery</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(21,1)">Ngôn Tình</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(22,1)">One Shot</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(23,1)">Psychological</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(24,1)">Romance</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(25,1)">School Life</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(26,1)">Slice of Life</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(27,1)">Smut</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(28,1)">Sports</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(29,1)">Tragedy</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(30,1)">Trinh Thám</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(31,1)">Truyện Màu</p>
+                                    </div>
+                                    <div class="drop-category__item" >
+                                    <p onclick="seachcategory(32,1)">Xuyên Không</p>
+                                    </div>
                         </div>
-                    </ul>
+                    </div>
                 </li>
                 <li class="navbar-list__item ratings">
-                    <a href="#" class="setcolor">
+                    <a href="" class="setcolor">
                         <span>XẾP HẠNG</span>
                         <i class="fa-solid fa-caret-down"></i>
                     </a>
@@ -436,12 +373,50 @@
         </div>
     </div>
 <div class="background" id="background" style="background-image: ;"></div>
+<div class="dashboad" id="dashboad">
+    <span>
+        <i class="fa-solid fa-angle-up"></i>
+        
+    </span>
+</div>
+<div class="setting" id="setting">
+    <span>
+       <i class="fa-solid fa-gear"></i>
+    </span>
+</div>
+<div class="showsetting" id="showsetting">
+    <div class="setting--header">
+        <h1>Cài Đặt</h1>
+        <div class="setting--header__exit" id="showsetting--exit">
+           <i class="fa-regular fa-circle-xmark"></i>
+        </div>
+    </div>
+    <div class="setting--container">
+        <div>
+            <h3>Chọn ảnh từ máy:</h3>
+            <i>Background:</i>
+            <input type="file" id="inputbackground">
+        </div>
+        <div>
+            <h3>Link :</h3>
+            <i>Background:</i>
+            <input type="text" id="inputbackground__link">
+            <button id="inputbackground__action">ok</button>
+        </div>
+        <div>
+            <h3>Độ mờ: (nhập 0 > 100)</h3>
+            <i>Background:</i>
+            <input type="text" id="inputbackground__opacity">
+            <button id="inputbackgroundopacity__action">ok</button>
+        </div>
+    </div>
+</div>
 <script>
     const cookies = document.cookie
     if (cookies) {
         const parseCoookie = JSON.parse(decodeURIComponent(cookies).split("=")[1])
-        const avtURI = parseCoookie.avatar || "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2020%2F08%2F04%2Fcream-golden-retriever-closeup-91607998-2000.jpg"
-        const username = parseCoookie.username ||  parseCoookie.admin_name
+        var avtURI = parseCoookie.avatar || "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2020%2F08%2F04%2Fcream-golden-retriever-closeup-91607998-2000.jpg"
+        var username = parseCoookie.username ||  parseCoookie.admin_name
         const gmail = parseCoookie.gmail
         if(parseCoookie.avatar){
             var uservat ="../../../public/image/avatar/"+avtURI 
@@ -460,4 +435,3 @@
     }
 
 </script> 
- <script src="/public/script/background.js"></script>

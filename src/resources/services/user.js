@@ -232,10 +232,10 @@ const userServices = {
              const mysql = require("mysql");
  
              const conToDb = mysql.createConnection({
-             host: HOST || "localhost",
-             user: USER || "sa",
-             password: PASSWORD || "123123",
-             database: DATABASE || "QUANLYNHANSU"
+                host: HOST || "localhost",
+                user: USER || "sa",
+                password: PASSWORD || "123123",
+                database: DATABASE || "QUANLYNHANSU"
              })
  
              conToDb.connect((err) => {

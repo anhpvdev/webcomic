@@ -31,17 +31,15 @@ function dashleft(){
     if(cout>=200){
         cout=cout-200
         settime(cout)
-        cout=cout+200
+        cout=cout-400
     }
 }
 
 setInterval(() => {
-    settime(cout);
+    settime(cout+200);
     cout = cout +200
     if(cout>1000){
         cout=0;
     }
     
 }, 3000);
-
-

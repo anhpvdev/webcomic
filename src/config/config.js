@@ -1,7 +1,14 @@
 const express = require("express");
 const path = require("path");
+
 const handlebars = require("express-handlebars").create({
-  defaultLayout: "main"
+  defaultLayout: "main",
+  helpers:{
+    indexup:function(value, options)
+    {
+        return parseInt(value) + 1;
+    },
+  }
 });
 
 
@@ -15,7 +22,8 @@ const config = (app) => {
   app.set("views", [
     path.join(__dirname, "../resources/views/user"),
     path.join(__dirname, "../resources/views/admin"),
-    path.join(__dirname, "../resources/views/commics")
+    path.join(__dirname, "../resources/views/commics"),
+    path.join(__dirname, "../resources/views/api-ajax")
   ]);
 
   // set static public folder

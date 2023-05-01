@@ -175,7 +175,7 @@ const adminServices = {
             console.log("Connected to mysql")
         })
              // connected to mysql successfully
-        const sql = `INSERT INTO chapters(comicid,name,uri) VALUES ('${comic}','${name}',${listchap});`
+        const sql =`INSERT INTO comics(name,author,views,image,topiccomment_id) VALUES ('${name}', '${author}',0, '${avt}',(select cm.topic from (SELECT CONCAT('ct',max(id)+1) as topic FROM comics) as cm));`
         conToDb.query(sql, (err, result) => {
             if (err) return res.send(`Truyện:lỗi r lm,ao`)
 

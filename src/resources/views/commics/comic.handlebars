@@ -1,6 +1,6 @@
 {{>header cookies=cookies}}
 
-    <div class="comic grid wide">
+    <div class="comic main-container grid wide">
         <div class="comic-container row no-gutters">
             <div class="comic-info col l-8">
                 <div class="comic-info_header">
@@ -54,19 +54,28 @@
                             </div>
                             <p>{{comics.views}}</p>
                         </div>
-                        {{#if follow}}
-                        <form method="post" action="/commic/unfollowcomic" class="comic-detail__follow unfollow">
-                            <button value="{{comics.id}}" name="comicid" class="comic-button follow">Hủy Theo dõi</button>
-                        </form>
-                        {{else}}
+
                         
-                        <form method="post" action="/commic/followcomic" class="comic-detail__follow">
-                            <button value="{{comics.id}}" name="comicid" class="comic-button follow">Theo dõi</button>
-                        </form>
-                        {{/if}}
+                        <div class="comic-detail__follow" id="b_follow">
+                            {{#if follow}}
+                            <button class="comic-button unfollow" onclick="unfollowcomic({{comics.id}})">Hủy Theo dõi</button>
+                            {{else}}
+                            <button class="comic-button follow" onclick="followcomic({{comics.id}})">Theo dõi</button>
+                             {{/if}}
+                        </div>
+                        
                         <div class="comic-detail__read">
-                            <a href="/commic/chapter/{{comics.minid}}" class="comic-button firstchapter">Đọc từ đầu</a>
-                            <a href="/commic/chapter/{{comics.maxid}}" class="comic-button lastchapter">Đọc mới nhất</a>
+                            {{#if comics.minid}}
+                            <a href="/comic/chapter/{{comics.minid}}" class="comic-button firstchapter">Đọc từ đầu</a>
+                            {{else}}
+                             <a href="/comic/{{comics.id}}" class="comic-button firstchapter">Đọc từ đầu</a>
+                            {{/if}}
+                            {{#if comics.minid}}
+                             <a href="/comic/chapter/{{comics.maxid}}" class="comic-button lastchapter">Đọc mới nhất</a>
+                            {{else}}
+                            <a href="/comic/{{comics.id}}" class="comic-button lastchapter">Đọc mới nhất</a>
+                            {{/if}}
+                           
                         </div>
                     </div>    
                 </div>
@@ -102,7 +111,7 @@
                     {{#with this}}
                     <div class="chapter-detail__list">
                         <div class="chapter">
-                            <a href="/commic/chapter/{{id}}">{{name}}</a>
+                            <a href="/comic/chapter/{{id}}&{{../comics.id}}">{{name}}</a>
                         </div>
                         <div class="date-update">
                             <span></span>
@@ -116,13 +125,12 @@
         </div>
         <div class="comic-comment">
            <div class="comment-form">
-                <form action="/commic/comment" method="post">
-                    <textarea name="comment" wrap="hard"></textarea>
-                    <input type="hidden" name="commicid" value="{{comics.id}}">
+                <div>
+                    <textarea id="maincontent-cmt" wrap="hard"></textarea>
                    <div>
-                     <button>Gửi</button>
+                     <button onclick="sendcommentcomic({{comics.topiccomment_id}})">Gửi</button>
                    </div>
-                </form>
+                </div>
            </div>
            <div class="comment-list">
                 <div class="comment-item">
@@ -141,3 +149,4 @@
            </div>
         </div>
     </div>
+{{>footer}}

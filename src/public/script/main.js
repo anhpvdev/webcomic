@@ -1,6 +1,5 @@
 var m =true
 var b =true
-var s =true
 var test = document.querySelectorAll(".setcolor")
 var __url = "http://localhost:8081/"
 
@@ -38,22 +37,6 @@ document.getElementById("show-notification").onclick = function() {
 
 }
 
-document.getElementById("setting").onclick = function(){
-    if(s){
-        document.getElementById("showsetting").style.top='100px'
-        s=false
-
-    }else{
-        document.getElementById("showsetting").style.top='-1000px'
-        s=true
-    }
-}
-
-
-document.getElementById("showsetting--exit").onclick = function(){
-        document.getElementById("showsetting").style.top='-1000px'
-        s=true
-}
 
 var anotherpagecontroller = document.getElementById("another--page")
 if(anotherpagecontroller){
@@ -99,85 +82,57 @@ document.getElementById("nextleft").onclick = function(){
 }
 
 
-document.getElementById("dashboad").onclick =function(){
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
-}
-
-
-var __background = document.getElementById("inputbackground");
-var __backgroundlink = document.getElementById("inputbackground__action");
-var __backgroundopacity = document.getElementById("inputbackgroundopacity__action")
-
-__background.addEventListener('change', (event) => {
-    const image = event.target.files[0];
-
-    const reader = new FileReader();
-
-    reader.readAsDataURL(image);
-
-    reader.addEventListener('load', () => {
-        localStorage.setItem('background', reader.result);
-        console.log("upload file success")
-        changebackground()
-    });
-});
-
-__backgroundlink.onclick = function(){
-    const linkimg = document.getElementById("inputbackground__link").value   
-    localStorage.setItem('background', linkimg);
-    console.log("upload file success")
-    changebackground()
-};
-
-__backgroundopacity.onclick = function(){
-    var opacity = document.getElementById("inputbackground__opacity").value
-    if (isNaN(opacity)){
-        alert("nhập số vào dcmm");
-    }else{
-        if(opacity<0 || opacity >100){
-            alert("nhập sai r dcmm");
+const listpage =document.getElementById("list--page")
+    
+    function addpagecontroller(number){
+        let listcontroller =""
+        console.log(listpage)
+        if(number>5){
+            listcontroller=`<a href="/?page=1" class="page">1</a> 
+            <a href="/?page=2" class="page">2</a> 
+            <li class="page"  id="another--page">...</li> 
+            <a href="/?page=${parseInt(number)}" class="page">${parseInt(number)}</a>
+            <a href="/?page=${parseInt(number)+1}" class="page">${parseInt(number)+1}</a>
+            `
         }else{
-            opacity =100- opacity  
-            localStorage.setItem('opacity',opacity);
-            console.log("upload opacity success  "+opacity)
-            changebackground()
+            let newnum = parseInt(number)+1
+            for(i=1;i<=newnum;i++){
+                if(i==3){
+                    listcontroller+=`<li class="page" id="another--page">...</li>`
+                }else{
+                    
+                     listcontroller+=`<a id="${i}" class="page" onclick="changepage(this.id)">${i}</a>`
+                }
+               
+            }
         }
+
+        listpage.innerHTML = listcontroller
     }
 
-};
-
-
-function changebackground(){
-    var __viewweb = document.getElementById("background")
-    const background_img = localStorage.getItem('background')
-    const background_opacity = localStorage.getItem('opacity')
-    // const linkbackground = "background-image: url(" + background_img + ");"
-    // const opacitybackground = "opacity:"+background_opacity+"%"
-    if (background_img) {
-        if (background_opacity) {
-            const backgroundcss = "background-image: url(" + background_img + ");opacity:"+background_opacity+"%"
-            __viewweb.setAttribute("style",backgroundcss)
-            console.log(backgroundcss)
+    function addpagecontrollerbytag(number,id){
+        const listpagetag =document.getElementById("list--pagetag")
+        let listcontrollertag =""
+        console.log("asdasdasd: "+number)
+        if(number>5){
+            listcontroller=`<a href="/?page=1" class="page">1</a> 
+            <a href="/?page=2" class="page">2</a> 
+            <li class="page"  id="another--page">...</li> 
+            <a href="/?page=${parseInt(number)}" class="page">${parseInt(number)}</a>
+            <a href="/?page=${parseInt(number)+1}" class="page">${parseInt(number)+1}</a>
+            `
         }else{
-            const backgroundcss = "background-image: url(" + background_img + ");"
-            __viewweb.setAttribute("style",backgroundcss)
-            console.log(backgroundcss)
+            let newnum = parseInt(number)+1
+            for(i=1;i<=newnum;i++){
+                console.log(listcontrollertag+"||"+newnum)
+                if(i==3){
+                    listcontrollertag+=`<li class="page" id="another--page">...</li>`
+                }else{
+                    
+                    listcontrollertag+=`<a  class="page" onclick=" seachcategory(${id},${i})">${i}</a>`
+                }
+               
+            }
         }
-    }else {
-        if (background_opacity) {
-            const backgroundcss = "opacity:"+background_opacity+"%"
-            __viewweb.setAttribute("style",backgroundcss)
-            console.log(backgroundcss)
-        }else{
-            __viewweb.setAttribute("style","")
-        }
+        listpagetag.innerHTML = listcontrollertag
     }
-
-}
-if(localStorage.getItem('background')){
-    changebackground()
-}

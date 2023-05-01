@@ -105,3 +105,91 @@ function changepage(id){
 }
 
 
+function getnumbercomicbycategory(e,id){
+    var content = e
+    var ss = content.match(/(numpagecategory\=)\d.\d+/g)
+    numbercomic =ss[0].slice(16)
+    var __numberpagebytag = numbercomic
+    console.log("asdasdas"+__numberpagebytag)
+    addpagecontrollerbytag(__numberpagebytag,id)
+
+}
+
+function seachcategory(id,num){
+    $.ajax({
+        type: "GET",
+        url: `/comic/category/${id}&${num}`,
+        success: function(data) {  
+            document.querySelector(".main-container").innerHTML = data 
+            getnumbercomicbycategory(data,id)
+            window.scrollTo(0,0)
+        }
+    })
+}
+
+function followcomic(idcomic){
+    $.ajax({
+        type: "POST",
+        url: `/comic/followcomic`,
+        data:{
+            comicid:idcomic,
+        },
+    })
+    document.getElementById("b_follow").innerHTML = `<button class="comic-button unfollow" onclick="followcomic({{comics.id}})">Hủy Theo dõi</button>`
+}
+
+function unfollowcomic(idcomic){
+    $.ajax({
+        type: "POST",
+        url: `/comic/unfollowcomic`,
+        data:{
+            comicid:idcomic,
+        },
+    })
+    document.getElementById("b_follow").innerHTML = `<button class="comic-button follow" onclick="unfollowcomic({{comics.id}})">Theo dõi</button>`
+}
+
+
+function sendcommentcomic(topicid){
+    console.log(topicid)
+    let content = document.getElementById("maincontent-cmt").value
+    const cookies = document.cookie
+    if(content){
+        if (cookies) {
+            $.ajax({
+                type: "POST",
+                url: `/comic/comment`,
+                data:{
+                    topicid:topicid,
+                    content: content,
+                    parentid:""
+                },
+            })
+        
+       
+
+
+
+            // let nowtime = (new Date().toLocaleDateString()) +"  "+ (new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"}))
+            // let newcomment = `<div class="comment-item">
+            //     <div class="comment-item__avt">
+            //         <img src="../../../public/image/avatar/${avtURI}" alt="">
+            //     </div>
+            //     <div class="comment-item__content">
+            //         <div class="content_name">
+            //             <p>${username}<span>${nowtime}</span></p>
+            //         </div>
+            //         <div class="content_cmt">
+            //             <p>${document.getElementById("maincontent-cmt").value}</p>
+            //         </div>
+            //     </div>
+            // </div>`
+            // document.querySelector(".comment-list").innerHTML =newcomment+document.querySelector(".comment-list").innerHTML
+        }else{
+            alert("đăng nhập đi eim")
+        }
+    }else{
+        alert("nhập gì đi eim")
+    }
+}
+

@@ -1,49 +1,18 @@
-{{>header cookies=cookies}}
-<div class="main grid">
-    <div class="main-container grid wide">
-        <div class="main-container__topcomic" >
-            <div>
-                <h2>Truyện HOT   </h2>
-                <div class="error-message">{{ token }} </div>
-                <div class="topcomic__list row no-gutters" id="main__topcomic">
-                    {{#each bannercomic}}
-                    <div class="topcomic__item col l-2__4 m-2__4 c-4">
-                        <div>
-                            <div class="topcomic__item__img">
-                                <a href="/comic/{{this.id}}">
-                                    <img src="/public/image/comic/{{this.image}}" alt="">
-                                </a>
-                            </div>
-                            <div class="topcomic__item__info">
-                                <a href="/comic/{{this.id}}">{{this.name}}</a>
-                                    {{!-- <div>
-                                        <a href="" class="col l-6"></a>
-                                        <div class="col l-6">
-                                            <i class="fa-solid fa-clock"></i>
-                                            <span></span>
-                                        </div>
-                                    </div> --}}
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
-                <div class="topcomic__nextleft" id="nextleft" onclick="dashleft()"><i class="fa-solid fa-angle-left"></i></div>
-                <div class="topcomic__nextright " id="nextright" onclick="dashright()"><i class="fa-solid fa-angle-right"></i></div>
+
+        <div class="seachcategory">
+            <div class="seachcategory--name">
+                <span>Thể Loại: </span>
+                <i>{{infotag.tagname}}</i>
+            </div>
+            <div class="seachcategory--info">
+                <p>{{infotag.taginf}}</p>
             </div>
         </div>
-
         <div class="body">
             <div class="body--container row">
                 <div class="body--container__listcomic l-8">
-                    <div class="listcomic--top">
-                        <div class="listcomic--top__newcomic">
-                            <h2>Truyện Mới Cập Nhật </h2>
-                        </div>
-                    </div>
                     <div class="listcomic--main">
                         <div class="listcomic grid row">
-                            
                             {{#each comics}}
                             <div class="listcomic--item l-3 m-3 c-4">
                                 <div class="item">
@@ -73,29 +42,17 @@
                                             <a>{{this.name}}</a>
                                         </div>
                                         <div class="item--bottom__listchapter">
-                                           <ul>
-                                                 {{!-- {{#each listchap}}
-                                                    {{#with this}}
-                                                    <li>
-                                                        <a href="{{id}}">{{name}}</a>
-                                                        <i>28/08/21</i>
-                                                    </li>
-                                                    {{/with}}
-                                                    {{/each}} --}}
-                                                    
-                                                </ul>
+                                           
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {{/each}}
-
-                            
+                            {{/each}}   
                         </div>
                     </div>
                     <div class="listcomic--footer">
                         <div class="listcomic--page">
-                            <ul class="list--page" id="list--page">
+                            <ul class="list--page" id="list--pagetag">
                                 
 {{!--                                
                                 <li class="page"><i class="fa-solid fa-angle-right"></i></li>
@@ -111,24 +68,17 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="body--container__pullright l-4">
              
                     <div class="pullright--topcomic">
                         <div class="topcomic--header">
                             <div class="topcomic--month">
-                                <a href="">Top Truyện</a>
+                                <a href="">Top: action</a>
                             </div>
-                            {{!-- <div class="topcomic--week">
-                                <a href="">Top Tuần</a>
-                            </div>
-                            <div class="topcomic--day">
-                                <a href="">Top Ngày</a>
-                            </div> --}}
                         </div>
                         <div class="topcomic--list">
                             <ul>
-                                {{#each topcomic}}
+                                 {{#each comicstop}}
                                 <li class="topcomic--item">
                                     <div class="topcomic--item__number">
                                         <span class="topcomicweb">{{indexup @index}}</span>
@@ -148,36 +98,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="pullright--topmember">
-                        <div class="pullright--top">
-                            <p>Top thành viên</p>
-                        </div>
-                        <div class="topmember--list">
-                            <ul>
-                                {{#each topuser}}
-                                <li class="member">
-                                    <div class="member--number">
-                                        <span class="topuserweb">{{indexup @index}}</span>
-                                    </div>
-                                    <div class="member--avatar">
-                                        <img src="/public/image/avatar/{{this.avatar}}" alt="top">
-                                    </div>
-                                    <div class="member--info">
-                                        <div class="member--info__name">
-                                            <p>{{this.username}}</p>
-                                        </div>
-                                        <div class="member--info__leve">
-                                            <p>Point: {{this.Point}}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+             </div>
             </div>
         </div>
-    </div>
-</div>
-{{>footer}}
+        <script>
+            {{#if num}}
+               const numpagecategory={{num}}
+            {{/if}}
+        </script>

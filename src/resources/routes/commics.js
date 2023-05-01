@@ -11,13 +11,13 @@ const user = require("../services/user")
 const commicsRoutes = (app) => {
   // routes for render views
     router.get("/:id",checkauth, comicServices.showcomic)
-    router.get("/chapter/:id",checkauth,user.getexp, comics.chapter)
-    router.get("/find/comic/?data=:id",comicServices.findcomic)
-
+    router.get("/chapter/:id&:comic",checkauth,user.getexp, comics.chapter)
+    router.get("/chapterapi/:chap",checkauth,user.getexp, comics.chapterapi)
+    router.get("/category/:id&:numpage", comicServices.seachcategory)
     router.post("/followcomic",userAuth,comics.followcomic)
     router.post("/unfollowcomic",userAuth,comics.unfollowcomic)
     router.post("/comment",userAuth,comics.comment)
 
-    return app.use("/commic", router)
+    return app.use("/comic", router)
 }
 module.exports = commicsRoutes

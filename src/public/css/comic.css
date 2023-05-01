@@ -84,7 +84,7 @@
 
 }
 
-.comic-detail__follow.unfollow > .follow{
+.comic-detail__follow > .unfollow{
     background-color: rgb(243, 59, 49);
     border: none;
     border-radius: 5px;
@@ -187,21 +187,21 @@
     flex: 1;
     text-align: center;
 }
-.comment-form > form {
+.comment-form > div{
     width: 700px;
 }
 
-.comment-form > form >textarea{
+.comment-form > div >textarea{
     width: 100%;
     height: 80px;
     display: block;
     padding: 10px;
     margin: 20px 0px;
 }
-.comment-form > form >div{
+.comment-form > div >div{
     text-align: end;
 }
-.comment-form > form >div>button{
+.comment-form > div >div>button{
     width: 50px;
     height: 50px;
 }

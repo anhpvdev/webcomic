@@ -11,5 +11,14 @@
 </head>
 <body>
     {{{body}}}
+    {{>script}}
+    <script>
+
+    {{#if num}}
+        console.log({{num}})
+  
+        addpagecontroller({{num}})
+    {{/if}}
+</script>
 </body>
 </html>

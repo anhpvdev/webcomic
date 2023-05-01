@@ -2,11 +2,15 @@
     <div class="chapter">
         <div class="chapter--header">
             <div class="chapter--header__menu">
-                <a href=""><i class="fa-solid fa-caret-left"></i></a>
-                <select>
-                    <option value="">{{chapter.name}}<option>
+                <i class="fa-solid fa-caret-left" id="backchap" onclick="unchap()"></i>
+                <select id="listselectchap">
+                    {{#each chapter.listchap}}
+                    {{#with this}}
+                        <option value="/comic/chapterapi/{{id}}">{{name}}</option>
+                     {{/with}}
+                    {{/each}}
                 </select>
-                <a href=""><i class="fa-solid fa-caret-right"></i></a>
+                <i class="fa-solid fa-caret-right" id="nextchap" onclick="nextchap()"></i>
             </div>
             <div class="chapter--header__list">
                 {{#each chapter.uri}}
@@ -17,4 +21,50 @@
             </div>
         </div>
     </div>
+    <script>
+        const select = document.getElementById('listselectchap');
+        var numchap = select.length
+        if(select.selectedIndex==0){
+             document.getElementById("backchap").style.backgroundColor = "rgb(98 86 86)"
+        }
+        if(select.selectedIndex==numchap-1){
+             document.getElementById("nextchap").style.backgroundColor = "rgb(98 86 86)"
+        }
+
+        select.addEventListener('change', function handleChange(event) {
+         changechap()
+
+        })
+
+        function nextchap(){
+            if(select.selectedIndex < numchap-1){
+                select.selectedIndex++
+                document.getElementById("backchap").style.backgroundColor = "rgb(0, 176, 9)"
+                changechap()
+            }else{
+                document.getElementById("nextchap").style.backgroundColor = "rgb(98 86 86)"
+                
+            }
+        }
+
+        function unchap(){
+            if(select.selectedIndex >0){
+                select.selectedIndex--
+                document.getElementById("nextchap").style.backgroundColor = "rgb(0, 176, 9)"
+                changechap()
+            }else{
+                document.getElementById("backchap").style.backgroundColor = "rgb(98 86 86)"
+                
+            }
+        }
+        function changechap(){
+             $.ajax({
+                type: "GET",
+                url: select.value,
+                success: function(data) {  
+                    document.querySelector(".chapter--header__list").innerHTML = data
+                }
+            })        
+        }
+    </script>
 {{>footer}}

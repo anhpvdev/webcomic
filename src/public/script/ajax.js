@@ -67,7 +67,7 @@ function getlistcomic(e){
 }
 
 
-const findcomic = document.getElementById("findcomic");
+var findcomic = document.getElementById("findcomic");
 findcomic.oninput = function(){
     console.log(findcomic.value)
     if(findcomic.value){
@@ -257,4 +257,38 @@ function sendcommentchapter(topicid,parentid,rep){
     }
 }
 
+function changeidchapter(){
+    let checkread = true
+    let chapid =document.querySelector(".chapterid").getAttribute("value")
+    let readtoken =document.querySelector(".chaptertoken").getAttribute("value")
+    timeread = document.querySelectorAll(".chapter--header__item").length * 1500
+    console.log(timeread)
+ 
+    if(chapid){
+        setTimeout(() => {
+            let pageheight =document.querySelector(".chapter--header__list").scrollHeight
+            document.addEventListener("scroll", (event) => {
+                if(checkread){
+                    if(pageYOffset >=pageheight-1000 ){
+                        console.log("ok")
+                        checkread=false
+                        readchapter(chapid,readtoken)  
+                    }
+                }
+            }) 
+        }, timeread);
+    }
+    
+}
+//send readchap
+function readchapter(id,rtoken) {  
+    $.ajax({
+        type: "POST",
+        url: `/comic/readchapter`,
+        data:{
+            chapterid:id,
+            readtoken:rtoken
+        },
+    })            
+}
 

@@ -415,8 +415,8 @@
     const cookies = document.cookie
     if (cookies) {
         const parseCoookie = JSON.parse(decodeURIComponent(cookies).split("=")[1])
-        var avtURI = parseCoookie.avatar || "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2020%2F08%2F04%2Fcream-golden-retriever-closeup-91607998-2000.jpg"
-        var username = parseCoookie.username ||  parseCoookie.admin_name
+        const avtURI = parseCoookie.avatar || "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2020%2F08%2F04%2Fcream-golden-retriever-closeup-91607998-2000.jpg"
+        const username = parseCoookie.username ||  parseCoookie.admin_name
         const gmail = parseCoookie.gmail
         if(parseCoookie.avatar){
             var uservat ="../../../public/image/avatar/"+avtURI 

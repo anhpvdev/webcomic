@@ -1,3 +1,5 @@
+const { time } = require('console')
+
 const comic = {
     allcomic: (req, res) => {
         // if(!req.headers.cookie){ //chualogin
@@ -164,29 +166,14 @@ const comic = {
                            if (err) console.log(err)
 
                            const sqlrepcmt =`SELECT cmt.id,cmt.parent_id,cmt.topic_id,cmt.user_id,cmt.content,DATE_FORMAT(cmt.timestampe, '%H:%i  %d-%m-%Y') as timecmt,users.avatar,users.username,users.fullname FROM chapters__comment as cmt LEFT JOIN users ON cmt.user_id = users.userid WHERE cmt.topic_id = '${result[0].topiccomment_id}' AND cmt.parent_id is not null ORDER BY cmt.timestampe;`
-                            conToDb.query(sqlrepcmt, (err, resuilrepcmt) => {
+                            conToDb.query(sqlrepcmt, async(err, resuilrepcmt) => {
                                 if (err) console.log(err)
 
-                                
-                                // const sqlview =`UPDATE comics SET views = views + 1 WHERE id=${idcomic}`
-                                // conToDb.query(sqlview, (err, views) => {
-                                //     if (err) console.log(err)
-        
-                                //     if(userid){
-                                //         const sqlhistory =`INSERT INTO userreadchapters (userid,chapterid) VALUES (${userid}, ${req.params.id})`
-                                //         conToDb.query(sqlhistory, (err, read) => {
-                                //             if (err) res.render("chapter",{ cookies: true ,chapter: result[0]})
-        
-                                //             conToDb.end() 
-                                //             res.render("chapter",{ cookies: true ,chapter: result[0]})
-                                //         })
-                                    
-                                //     }else{
-                                //         conToDb.end() 
-                                //         res.render("chapter",{ cookies: false ,chapter: result[0]})
-                                //     }
-                                // })
-                                res.render("chapter",{ cookies: true ,chapter: result[0],comment:resuilcmt,repcomment:resuilrepcmt})
+                                const jwt = require("jsonwebtoken")
+                                let newdate = new Date()
+                                const chaptoken = await jwt.sign(newdate.getTime(),"timeread")
+
+                                res.render("chapter",{ cookies: true ,chapter: result[0],comment:resuilcmt,repcomment:resuilrepcmt,token:chaptoken})
                             })
                         })
                     }else{
@@ -217,17 +204,68 @@ const comic = {
         }else{
                // connected to mysql successfully
                const sql = `select * from chapters where id = ${idchap};`
-               conToDb.query(sql, (err, result) => {
+               conToDb.query(sql, async (err, result) => {
                    if (err) console.log(err)
-                   
+
                        if(result[0]){
                            result[0].uri=result[0].uri.split(",")
-                           return res.render("changechapter",{ cookies: true ,chapter: result[0]})
+                           if(userid){
+                                const jwt = require("jsonwebtoken")
+                                let newdate = new Date()
+                                const chaptoken = await jwt.sign(newdate.getTime(),"timeread")
+
+                                return res.render("changechapter",{ cookies: true ,chapter: result[0],token:chaptoken})
+                           }else{
+                                return res.render("changechapter",{ cookies: false ,chapter: result[0],token:null})
+                           }
                        }else{
                            return null
                        }
                })
         }
+    },
+    readchapterapi: async (req, res) => {//nay la show chap
+        const {currentId,chapterid,readtoken} = req.body
+        const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
+        const mysql = require("mysql");
+
+        console.log(req.body)
+
+        const conToDb = mysql.createConnection({
+            host: HOST || "localhost",
+            user: USER || "sa",
+            password: PASSWORD || "123123",
+            database: DATABASE || "QUANLYNHANSU"
+        })
+        conToDb.connect((err) => {
+            if (err) throw err;
+            console.log("Connected to mysql")
+        })
+        const jwt = require("jsonwebtoken")
+        let newdate = new Date()
+        
+        let oldtime = jwt.decode(readtoken)
+
+        console.log(newdate.getTime()-oldtime)
+
+        // const sqlview =`UPDATE comics SET views = views + 1 WHERE id=${idcomic}`
+        //     conToDb.query(sqlview, (err, views) => {
+        //         if (err) console.log(err)
+        
+        //         if(currentId){
+        //             const sqlhistory =`INSERT INTO userreadchapters (userid,chapterid) VALUES (${currentId}, ${req.params.id})`
+        //             conToDb.query(sqlhistory, (err, read) => {
+        //                 if (err) res.render("chapter",{ cookies: true ,chapter: result[0]})
+        
+        //                 conToDb.end() 
+        //                 res.render("chapter",{ cookies: true ,chapter: result[0]})
+        //             })
+                                    
+        //             }else{
+        //                conToDb.end() 
+        //                 res.render("chapter",{ cookies: false ,chapter: result[0]})
+        //             }
+        //         })
     },
 
     followcomic:(req, res) => {
@@ -361,6 +399,7 @@ const comic = {
         }
 
         console.log(newcmt)
+        
         conToDb.query(newcmt, (err, comment) => {
             if (err) return res.send(false)
 

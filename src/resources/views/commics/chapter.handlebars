@@ -13,6 +13,8 @@
                 <i class="fa-solid fa-caret-right" id="nextchap" onclick="nextchap()"></i>
             </div>
             <div class="chapter--header__list">
+                <div class="chapterid" value="{{chapter.id}}"></div>
+                <div class="chaptertoken" value="{{token}}"></div>
                 {{#each chapter.uri}}
                     <div class="chapter--header__item">
                         <img class="item" src="/public/image/chapter/{{../chapter.id}}/{{this}}" alt="">
@@ -80,6 +82,8 @@
         </div>
         
     </div>
+    {{>footer}}
+    {{>script}}
     <script>
         const select = document.getElementById('listselectchap');
         var numchap = select.length
@@ -121,9 +125,12 @@
                 type: "GET",
                 url: select.value,
                 success: function(data) {  
+                    window.scrollTo(0,0)
                     document.querySelector(".chapter--header__list").innerHTML = data
+                    changeidchapter()
+
                 }
             })        
         }
+        changeidchapter()
     </script>
-{{>footer}}

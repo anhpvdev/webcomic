@@ -12,7 +12,9 @@
 .chapter--header__menu{
     text-align: center;
     padding: 20px;
-    
+    position: sticky;
+    top: 39px;
+    background: rgba(0,0,0,0.5);
 }
 
 .chapter--header__menu > select{
@@ -40,5 +42,6 @@
 
 .chapter--header__item > .item{
     width: 100%;
-
+    margin: 0px;
+    padding: 0px;
 }

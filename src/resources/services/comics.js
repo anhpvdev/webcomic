@@ -3,10 +3,8 @@ const { time } = require('console')
 const comic = {
     allcomic: (req, res) => {
         // if(!req.headers.cookie){ //chualogin
-            const numpage = require('url').parse(req.url,true).query.page
             const cookies = req.headers.cookie 
-            const numbercomicshow =20
-
+           
             const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
             const mysql = require("mysql");
 
@@ -28,49 +26,79 @@ const comic = {
                 if (err) console.log(err)
                 var num = num[0].num
 
-                if(!numpage){
-                    var OF_num = 0
-                    const sql=`SELECT comics.* FROM lastupdatedcomic INNER JOIN comics ON lastupdatedcomic.id = comics.id ORDER BY lastupdatedcomic.updatetime DESC LIMIT ${numbercomicshow} OFFSET ${OF_num};`
-                
-                conToDb.query(sql, (err, result) => {
-                    if (err) console.log(err)
-                    
-                    const sqltopcomic =`SELECT * FROM comics ORDER BY views DESC LIMIT 10`
-                    conToDb.query(sqltopcomic, (err, resulttopcomic) => {
-                        if (err) console.log(err)
-
-                        const sqltopuser =`SELECT * FROM users ORDER BY Point DESC LIMIT 10`
-                        conToDb.query(sqltopuser, (err, resulttopuser) => {
-                            if (err) console.log(err)
-
-                            const sqlreviewcomic =`SELECT * FROM comics ORDER BY id DESC LIMIT 10;`
-                            conToDb.query(sqlreviewcomic, (err, resultreviewcomic) => {
-                                if (err) console.log(err)
-                                
-                                conToDb.end()
-                                if(!req.headers.cookie){
-                                    return res.render('home', { cookies: false,comics:result,topcomic:resulttopcomic,topuser:resulttopuser,bannercomic:resultreviewcomic,num:num/20})
-                                }else{
-                                    return res.render('home', { cookies: cookies,comics:result,topcomic:resulttopcomic,topuser:resulttopuser,bannercomic:resultreviewcomic,num:num/20})
-                                }
-                            })
-                        })
-                    })
-                })
+               
+                if(!req.headers.cookie){
+                    return res.render('home', { cookies: false,num:num})
                 }else{
-                    var OF_num =numbercomicshow* (numpage-1)
-                    const sql=`SELECT comics.* FROM lastupdatedcomic INNER JOIN comics ON lastupdatedcomic.id = comics.id ORDER BY lastupdatedcomic.updatetime DESC LIMIT ${numbercomicshow} OFFSET ${OF_num};`
-                
-                    conToDb.query(sql, (err, result) => {
-                        if (err) console.log(err)
-                        conToDb.end()
-                        return res.send(result)
-                    })
+                    return res.render('home', { cookies: cookies,num:num})
                 }
+            })
+      
+    },
+    homecomic: (req, res) => {
+        // if(!req.headers.cookie){ //chualogin
+            const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
+            const mysql = require("mysql");
+            console.log("hello")
+            console.log(req.params.page)
+            const comicnum = 20
+            const OF_num = req.params.page * comicnum
+            const conToDb = mysql.createConnection({
+                host: HOST || "localhost",
+                user: USER || "sa",
+                password: PASSWORD || "123123",
+                database: DATABASE || "QUANLYNHANSU"
+            })
+        
+            conToDb.connect((err) => {
+                if (err) throw err;
+                console.log("Connected to mysql")
+            })
+                // connected to mysql successfully
+            // const sql = `SELECT * FROM comics;`
+            const sql = `SELECT comics.*,CONCAT("[",GROUP_CONCAT(comic SEPARATOR','),"]") AS listid FROM lastupdatedcomic INNER JOIN comics ON lastupdatedcomic.id = comics.id LEFT JOIN( SELECT comicid, JSON_OBJECT("id", id, "name", NAME) AS comic FROM chapters ) AS ch ON ch.comicid = comics.id GROUP BY comics.id ORDER BY lastupdatedcomic.updatetime DESC LIMIT ${comicnum} OFFSET ${OF_num};`
+            conToDb.query(sql, (err, menucomic) => {
+                if (err) console.log(err)
+
+                res.send(menucomic)
+            
+
+            })
+      
+    },hotcomic: (req, res) => {
+        // if(!req.headers.cookie){ //chualogin
+            const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
+            const mysql = require("mysql");
+            console.log(req.params.page)
+
+            const comicnum = 20
+            const OF_num = req.params.page * comicnum
+
+            const conToDb = mysql.createConnection({
+                host: HOST || "localhost",
+                user: USER || "sa",
+                password: PASSWORD || "123123",
+                database: DATABASE || "QUANLYNHANSU"
+            })
+        
+            conToDb.connect((err) => {
+                if (err) throw err;
+                console.log("Connected to mysql")
+            })
+                // connected to mysql successfully
+            // const sql = `SELECT * FROM comics;`
+            const sql = `SELECT c.* ,CONCAT("[",GROUP_CONCAT(comic SEPARATOR','),"]") AS listid,(SELECT COUNT(id) FROM comics)as num FROM comics as c LEFT JOIN( SELECT comicid, JSON_OBJECT("id", id, "name", NAME) AS comic FROM chapters ) AS ch ON ch.comicid = c.id GROUP BY c.id ORDER BY c.views DESC LIMIT ${comicnum} OFFSET ${OF_num};`
+            conToDb.query(sql, (err, hotcomic) => {
+                if (err) console.log(err)
+
+                console.log(sql)
+                res.send(hotcomic)
+            
 
             })
       
     },
+
     showcomic: (req, res) => {
         const cookies = req.headers.cookie 
         const {currentId} = req.body
@@ -188,7 +216,7 @@ const comic = {
         const mysql = require("mysql");
 
         const idchap = req.params.chap
-
+        console.log(idchap)
         const conToDb = mysql.createConnection({
             host: HOST || "localhost",
             user: USER || "sa",
@@ -206,21 +234,11 @@ const comic = {
                const sql = `select * from chapters where id = ${idchap};`
                conToDb.query(sql, async (err, result) => {
                    if (err) console.log(err)
-
-                       if(result[0]){
-                           result[0].uri=result[0].uri.split(",")
-                           if(userid){
-                                const jwt = require("jsonwebtoken")
-                                let newdate = new Date()
-                                const chaptoken = await jwt.sign(newdate.getTime(),"timeread")
-
-                                return res.render("changechapter",{ cookies: true ,chapter: result[0],token:chaptoken})
-                           }else{
-                                return res.render("changechapter",{ cookies: false ,chapter: result[0],token:null})
-                           }
-                       }else{
-                           return null
-                       }
+                   const jwt = require("jsonwebtoken")
+                    let newdate = new Date()
+                    const chaptoken = await jwt.sign(newdate.getTime(),"timeread")
+                    result[0].token = chaptoken
+                    return res.send(result)
                })
         }
     },
@@ -248,24 +266,23 @@ const comic = {
 
         console.log(newdate.getTime()-oldtime)
 
-        // const sqlview =`UPDATE comics SET views = views + 1 WHERE id=${idcomic}`
-        //     conToDb.query(sqlview, (err, views) => {
-        //         if (err) console.log(err)
+        const sqlview =`UPDATE comics SET views = views + 1 WHERE id=${idcomic}`
+            conToDb.query(sqlview, (err, views) => {
+                if (err) console.log(err)
         
-        //         if(currentId){
-        //             const sqlhistory =`INSERT INTO userreadchapters (userid,chapterid) VALUES (${currentId}, ${req.params.id})`
-        //             conToDb.query(sqlhistory, (err, read) => {
-        //                 if (err) res.render("chapter",{ cookies: true ,chapter: result[0]})
+                if(currentId){
+                    const sqlhistory =`INSERT INTO userreadchapters (userid,chapterid) VALUES (${currentId}, ${req.params.id})`
+                    conToDb.query(sqlhistory, (err, read) => {
+                        if (err) res.render("chapter",{ cookies: true ,chapter: result[0]})
         
-        //                 conToDb.end() 
-        //                 res.render("chapter",{ cookies: true ,chapter: result[0]})
-        //             })
+                        conToDb.end() 
+                        
+                    })
                                     
-        //             }else{
-        //                conToDb.end() 
-        //                 res.render("chapter",{ cookies: false ,chapter: result[0]})
-        //             }
-        //         })
+                }else{
+                    conToDb.end() 
+                }
+            })
     },
 
     followcomic:(req, res) => {
@@ -436,6 +453,34 @@ const comic = {
         const numbercomicshow =20
         const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
         const mysql = require("mysql");
+        var OF_num =numbercomicshow* numpage
+        const conToDb = mysql.createConnection({
+             host: HOST || "localhost",
+             user: USER || "sa",
+             password: PASSWORD || "123123",
+             database: DATABASE || "QUANLYNHANSU"
+         })
+     
+         conToDb.connect((err) => {
+             if (err) throw err; 
+             console.log("Connected to mysql")
+         })
+              // connected to mysql successfully
+        const sqlfind =`select ct.*,t.tagname,t.taginf,c.name,c.views,c.image,(SELECT count(comicid) FROM comics_tags WHERE tagid=${req.params.id})as num,CONCAT("[",GROUP_CONCAT(comic SEPARATOR','),"]") AS listid FROM comics_tags as ct LEFT JOIN tags as t ON t.tagid =ct.tagid LEFT JOIN comics as c ON ct.comicid =c.id LEFT JOIN( SELECT comicid, JSON_OBJECT("id", id, "name", NAME) AS comic FROM chapters ) AS ch ON ch.comicid = c.id WHERE ct.tagid = ${req.params.id} GROUP BY c.id LIMIT ${numbercomicshow} OFFSET ${OF_num};`
+        conToDb.query(sqlfind, (err, listcomic) => {
+             if (err) console.log(err)
+
+            
+             console.log(listcomic)
+            
+             return res.send(listcomic)
+         })
+     },
+     gettopuser: (req, res) => {
+        const numpage = req.params.numpage
+        const numbercomicshow =20
+        const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
+        const mysql = require("mysql");
         var OF_num =numbercomicshow* (numpage-1)
         const conToDb = mysql.createConnection({
              host: HOST || "localhost",
@@ -449,23 +494,67 @@ const comic = {
              console.log("Connected to mysql")
          })
               // connected to mysql successfully
-        const sqlfind =`select ct.*,t.tagname,t.tagid,t.taginf,c.name,c.views,c.image FROM comics_tags as ct LEFT JOIN tags as t ON t.tagid =ct.tagid LEFT JOIN comics as c ON ct.comicid =c.id WHERE ct.tagid = ${req.params.id} LIMIT ${numbercomicshow} OFFSET ${OF_num};`
-        conToDb.query(sqlfind, (err, listcomic) => {
-             if (err) console.log(err)
+        const sql =`SELECT u.fullname,u.avatar,u.Point FROM users as u ORDER BY Point DESC LIMIT 10`
+        conToDb.query(sql, (err, result) => {
+            if (err) console.log(err)
 
-            const sqlfindtop =`select ct.*,c.name,c.views,c.image FROM comics_tags as ct LEFT JOIN comics as c ON ct.comicid =c.id WHERE ct.tagid = ${req.params.id} ORDER BY c.views DESC LIMIT 10;`
-            conToDb.query(sqlfindtop, (err, listcomictop) => {
-                if (err) console.log(err)
-
-                const sqlcount =`SELECT count(comicid)as num FROM comics_tags WHERE tagid=${req.params.id}`
-                conToDb.query(sqlcount, (err, num) => {
-                    if (err) console.log(err)
-                    console.log(num[0].num/20)
-                    return [40,res.render("seach-category", { comics: listcomic,comicstop:listcomictop,infotag:listcomic[0],num:num[0].num/20})]
-                })
-            })
+            return res.send(result)
+        })
+        
+     },
+     gettopcomic: (req, res) => {
+        const numpage = req.params.numpage
+        const numbercomicshow =20
+        const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
+        const mysql = require("mysql");
+        var OF_num =numbercomicshow* (numpage-1)
+        const conToDb = mysql.createConnection({
+             host: HOST || "localhost",
+             user: USER || "sa",
+             password: PASSWORD || "123123",
+             database: DATABASE || "QUANLYNHANSU"
          })
-     }
+     
+         conToDb.connect((err) => {
+             if (err) throw err; 
+             console.log("Connected to mysql")
+         })
+              // connected to mysql successfully
+              const sql =`SELECT * FROM comics ORDER BY views DESC LIMIT 10`
+        
+        conToDb.query(sql, (err, result) => {
+            if (err) console.log(err)
+
+            return res.send(result)
+        })
+        
+     },
+     gettophot: (req, res) => {
+        const numpage = req.params.numpage
+        const numbercomicshow =20
+        const { HOST, USER, PASSWORD, DATABASE } = require("dotenv").config()["parsed"]
+        const mysql = require("mysql");
+        var OF_num =numbercomicshow* (numpage-1)
+        const conToDb = mysql.createConnection({
+             host: HOST || "localhost",
+             user: USER || "sa",
+             password: PASSWORD || "123123",
+             database: DATABASE || "QUANLYNHANSU"
+         })
+     
+         conToDb.connect((err) => {
+             if (err) throw err; 
+             console.log("Connected to mysql")
+         })
+              // connected to mysql successfully
+          const sql =`SELECT * FROM comics ORDER BY id DESC LIMIT 10`
+          conToDb.query(sql, (err, result) => {
+            if (err) console.log(err)
+
+            return res.send(result)
+        })
+     },
+
 }
 
 module.exports = comic

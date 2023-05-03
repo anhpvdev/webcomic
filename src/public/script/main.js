@@ -69,17 +69,17 @@ document.getElementById("changepage").onclick = function(){
 }
 
 
-document.getElementById("nextright").onclick = function(){
-    cout=cout+200
-    settime(cout)
-}
+// document.getElementById("nextright").onclick = function(){
+//     cout=cout+200
+//     settime(cout)
+// }
 
-document.getElementById("nextleft").onclick = function(){
-    if(cout>=200){
-        cout=cout-200
-        settime(cout)
-    }
-}
+// document.getElementById("nextleft").onclick = function(){
+//     if(cout>=200){
+//         cout=cout-200
+//         settime(cout)
+//     }
+// }
 
 
 const listpage =document.getElementById("list--page")
@@ -95,13 +95,37 @@ const listpage =document.getElementById("list--page")
             <a href="/?page=${parseInt(number)+1}" class="page">${parseInt(number)+1}</a>
             `
         }else{
-            let newnum = parseInt(number)+1
-            for(i=1;i<=newnum;i++){
+            let newnum = parseInt(number)
+            for(i=0;i<=newnum;i++){
                 if(i==3){
                     listcontroller+=`<li class="page" id="another--page">...</li>`
-                }else{
-                    
-                     listcontroller+=`<a id="${i}" class="page" onclick="changepage(this.id)">${i}</a>`
+                }else{  
+                     listcontroller+=`<a id="${i}" class="page" onclick="getmaincomic(this.id)">${i +1}</a>`
+                }
+               
+            }
+        }
+
+        listpage.innerHTML = listcontroller
+    }
+
+    function addpagecontrollerbyhot(number){
+        let listcontroller =""
+
+        if(number>5){
+            listcontroller=`<a href="/?page=1" class="page">1</a> 
+            <a href="/?page=2" class="page">2</a> 
+            <li class="page"  id="another--page">...</li> 
+            <a href="/?page=${parseInt(number)}" class="page">${parseInt(number)}</a>
+            <a href="/?page=${parseInt(number)+1}" class="page">${parseInt(number)+1}</a>
+            `
+        }else{
+            let newnum = parseInt(number)
+            for(i=0;i<=newnum;i++){
+                if(i==3){
+                    listcontroller+=`<li class="page" id="another--page">...</li>`
+                }else{  
+                     listcontroller+=`<a id="${i}" class="page" onclick="gethotcomic(this.id)">${i +1}</a>`
                 }
                
             }
@@ -111,9 +135,9 @@ const listpage =document.getElementById("list--page")
     }
 
     function addpagecontrollerbytag(number,id){
-        const listpagetag =document.getElementById("list--pagetag")
-        let listcontrollertag =""
-        console.log("asdasdasd: "+number)
+        console.log(number +"||"+id)
+        let listcontroller =""
+
         if(number>5){
             listcontroller=`<a href="/?page=1" class="page">1</a> 
             <a href="/?page=2" class="page">2</a> 
@@ -122,18 +146,17 @@ const listpage =document.getElementById("list--page")
             <a href="/?page=${parseInt(number)+1}" class="page">${parseInt(number)+1}</a>
             `
         }else{
-            let newnum = parseInt(number)+1
-            for(i=1;i<=newnum;i++){
-                console.log(listcontrollertag+"||"+newnum)
+            let newnum = parseInt(number)
+            for(i=0;i<=newnum;i++){
                 if(i==3){
-                    listcontrollertag+=`<li class="page" id="another--page">...</li>`
-                }else{
-                    
-                    listcontrollertag+=`<a  class="page" onclick=" seachcategory(${id},${i})">${i}</a>`
+                    listcontroller+=`<li class="page" id="another--page">...</li>`
+                }else{  
+                     listcontroller+=`<a class="page" onclick="seachcategory(${id},${i})">${i +1}</a>`
                 }
                
             }
         }
-        listpagetag.innerHTML = listcontrollertag
+
+        listpage.innerHTML = listcontroller
     }
 

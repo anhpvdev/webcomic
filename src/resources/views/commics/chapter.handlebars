@@ -120,14 +120,15 @@
                 
             }
         }
+
         function changechap(){
              $.ajax({
                 type: "GET",
                 url: select.value,
                 success: function(data) {  
                     window.scrollTo(0,0)
-                    document.querySelector(".chapter--header__list").innerHTML = data
-                    changeidchapter()
+                    binnewchap(data)
+                    changeidchapter(data)
 
                 }
             })        

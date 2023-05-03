@@ -49,10 +49,12 @@
 
 
 
-.navbar-list > .navbar-list__item >a{
+.navbar-list > .navbar-list__item >a,
+.navbar-list > .navbar-list__item >p{
     line-height: 40px;
     display: block;
     text-decoration: none;
+    cursor: pointer;
 }
 
 

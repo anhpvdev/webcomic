@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2023 at 03:01 PM
+-- Generation Time: May 02, 2023 at 04:39 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -52,7 +52,7 @@ CREATE TABLE `chapters` (
   `name` varchar(255) DEFAULT NULL,
   `uri` varchar(1000) NOT NULL,
   `uploadTime` datetime DEFAULT current_timestamp(),
-  `topiccomment_id` int(11) DEFAULT NULL
+  `topiccomment_id` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -60,26 +60,55 @@ CREATE TABLE `chapters` (
 --
 
 INSERT INTO `chapters` (`id`, `comicid`, `comicLocalId`, `name`, `uri`, `uploadTime`, `topiccomment_id`) VALUES
-(1, 2, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:34:19', NULL),
-(2, 1, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:35:19', NULL),
-(3, 5, 0, 'chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:36:19', NULL),
-(4, 2, 0, 'Chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:37:19', NULL),
-(6, 3, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:38:19', NULL),
-(7, 7, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:39:19', NULL),
-(8, 8, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:40:19', NULL),
-(9, 8, 0, 'Chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:41:19', NULL),
-(10, 6, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.pngv', '2023-04-18 09:42:19', NULL),
-(11, 14, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:43:19', NULL),
-(12, 2, NULL, 'chap 3', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:44:19', NULL),
-(13, 2, NULL, 'chap 4', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:45:19', NULL),
-(14, 2, NULL, 'chap 5', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:45:19', NULL),
-(15, 2, NULL, 'chap 6', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:46:19', NULL),
-(16, 8, NULL, 'chap 3', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:53:19', NULL),
-(17, 6, NULL, 'chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 10:39:25', NULL),
-(18, 7, NULL, 'Chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 18:23:58', NULL),
-(19, 12, NULL, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 19:34:35', NULL),
-(20, 1, NULL, 'chap 999', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-19 12:09:05', NULL),
-(21, 3, NULL, 'chap 1111', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-19 12:27:22', NULL);
+(1, 2, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:34:19', 'ct1'),
+(2, 1, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:35:19', 'ct2'),
+(3, 5, 0, 'chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:36:19', 'ct3'),
+(4, 2, 0, 'Chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:37:19', 'ct4'),
+(6, 3, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:38:19', 'ct6'),
+(7, 7, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:39:19', 'ct7'),
+(8, 8, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:40:19', 'ct8'),
+(9, 8, 0, 'Chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:41:19', 'ct9'),
+(10, 6, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.pngv', '2023-04-18 09:42:19', 'ct10'),
+(11, 14, 0, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:43:19', 'ct11'),
+(12, 2, NULL, 'chap 3', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:44:19', 'ct12'),
+(13, 2, NULL, 'chap 4', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:45:19', 'ct13'),
+(14, 2, NULL, 'chap 5', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:45:19', 'ct14'),
+(15, 2, NULL, 'chap 6', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:46:19', 'ct15'),
+(16, 8, NULL, 'chap 3', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 09:53:19', 'ct16'),
+(17, 6, NULL, 'chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 10:39:25', 'ct17'),
+(18, 7, NULL, 'Chap 2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 18:23:58', 'ct18'),
+(19, 12, NULL, 'Chap 1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-18 19:34:35', 'ct19'),
+(20, 1, NULL, 'chap 999', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-19 12:09:05', 'ct20'),
+(21, 3, NULL, 'chap 1111', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-04-19 12:27:22', 'ct21'),
+(23, 16, NULL, 'chap1', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-05-01 09:42:13', 'ct23'),
+(24, 16, NULL, 'chap2', '1.jpg,2.png,3.png,4.png,5.png,6.png,7.png,8.png,9.png,10.png,11.png,12.png,13.png,14.png', '2023-05-01 09:55:36', 'ct24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chapters__comment`
+--
+
+CREATE TABLE `chapters__comment` (
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `topic_id` varchar(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` varchar(1000) DEFAULT NULL,
+  `timestampe` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chapters__comment`
+--
+
+INSERT INTO `chapters__comment` (`id`, `parent_id`, `topic_id`, `user_id`, `content`, `timestampe`) VALUES
+(1, NULL, 'ct2', 2, 'huhuhuhuhuhhuhu', '2023-05-01 18:54:52'),
+(4, NULL, 'ct1', 2, 'huhuhuhu', '2023-05-01 20:20:10'),
+(5, NULL, 'ct1', 2, 'hix hix  đcm', '2023-05-01 20:23:04'),
+(7, NULL, 'ct1', 2, 'hello em', '2023-05-01 22:14:27'),
+(8, NULL, 'ct1', 2, 'hú hú ', '2023-05-01 22:15:57'),
+(9, 8, 'ct1', 2, 'gì zậy', '2023-05-01 22:21:28');
 
 -- --------------------------------------------------------
 
@@ -94,7 +123,7 @@ CREATE TABLE `comics` (
   `status` int(11) DEFAULT NULL,
   `views` int(11) DEFAULT NULL,
   `image` varchar(255) NOT NULL,
-  `topiccomment_id` int(11) DEFAULT NULL
+  `topiccomment_id` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -102,31 +131,31 @@ CREATE TABLE `comics` (
 --
 
 INSERT INTO `comics` (`id`, `name`, `author`, `status`, `views`, `image`, `topiccomment_id`) VALUES
-(1, 'Truyện thứ 1', 'Author 1', NULL, 59, 'ake.jpg', NULL),
-(2, 'Truyện thứ 2', 'Author 2', NULL, 59, 'bluf.jpg', NULL),
-(3, 'Truyện thứ 3', 'Author 3', NULL, 3, 'ddsaaw.jpg', NULL),
-(5, 'test', 'test', NULL, 4, '337255205_1782278522173595_2167193403709380852_n.jpg', NULL),
-(6, 'Test 1', 'Author 1111', NULL, 13, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', NULL),
-(7, 'Test 2', 'Author 3333', NULL, 16, '2021_11_02_16_23_IMG_1723.JPG', NULL),
-(8, 'Last Test', 'Author last', NULL, 4, '92607121_p0_master1200.jpg', NULL),
-(9, 'ADd new', 'úahod', NULL, 0, '269751839_1543218059346028_7069596240342700469_n.jpg', NULL),
-(10, 'Test 4444', 'd;ấ', NULL, 0, '105615137_p0_master1200.jpg', NULL),
-(12, 'halllooooo', 'áddsa', NULL, 0, '105080452_p0_master1200.jpg', NULL),
-(14, 'test aaaa', '211231', NULL, 5, '2021_11_02_16_23_IMG_1723.JPG', NULL),
-(16, 'add toap[sdjpasjdpasodjpaosdpasdoassd', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '103469012_p0.png', NULL),
-(17, 'ádasdasdasdasasasdasasdasasd', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '91362471_p0_master1200.jpg', NULL),
-(18, 'âggggggggggggggggggggggggggggggggggggggg', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '102036798_p0 - Copy - Copy (2).png', NULL),
-(19, 'ghuhuhuhuuhuhuhuhuhuhuhuuh', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '105006236_p0_master1200.jpg', NULL),
-(20, 'test add tag ', 'huhuhuhu', NULL, 0, 'Ã¡dasdasd-gigapixel-scale-2_00x.png', NULL),
-(21, 'ádasdas', 'ádasdas', NULL, 0, '92607121_p0_master1200.jpg', NULL),
-(22, 'ádasd', 'ádasasdas', NULL, 0, 'bluf.jpg', NULL),
-(23, 'ádasdasd', 'ádasasd', NULL, 0, 'ddsaaw.jpg', NULL),
-(24, 'ádasd', 'ádasda', NULL, 0, '2021_11_02_16_23_IMG_1723.JPG', NULL),
-(25, 'ádasd', 'ádasdasd', NULL, 0, 'ddsaaw.jpg', NULL),
-(26, 'ádasdas', 'ádasdassd', NULL, 0, 'Ã¡dasdas.png', NULL),
-(27, 'Thằng này là Truyện Hoàn CmN chỉnh', 'tao', NULL, 0, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', NULL),
-(28, 'Thằng này là Truyện Hoàn CmN chỉnh', 'tao', NULL, 0, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', NULL),
-(29, 'Lần này ok thật', 'ádasasdasasd', NULL, 0, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', NULL);
+(1, 'Truyện thứ 1', 'Author 1', NULL, 59, 'ake.jpg', 'cm1'),
+(2, 'Truyện thứ 2', 'Author 2', NULL, 59, 'bluf.jpg', 'cm2'),
+(3, 'Truyện thứ 3', 'Author 3', NULL, 3, 'ddsaaw.jpg', 'cm3'),
+(5, 'test', 'test', NULL, 4, '337255205_1782278522173595_2167193403709380852_n.jpg', 'cm5'),
+(6, 'Test 1', 'Author 1111', NULL, 13, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', 'cm6'),
+(7, 'Test 2', 'Author 3333', NULL, 16, '2021_11_02_16_23_IMG_1723.JPG', 'cm7'),
+(8, 'Last Test', 'Author last', NULL, 4, '92607121_p0_master1200.jpg', 'cm8'),
+(9, 'ADd new', 'úahod', NULL, 0, '269751839_1543218059346028_7069596240342700469_n.jpg', 'cm9'),
+(10, 'Test 4444', 'd;ấ', NULL, 0, '105615137_p0_master1200.jpg', 'cm10'),
+(12, 'halllooooo', 'áddsa', NULL, 0, '105080452_p0_master1200.jpg', 'cm12'),
+(14, 'test aaaa', '211231', NULL, 5, '2021_11_02_16_23_IMG_1723.JPG', 'cm14'),
+(16, 'add toap[sdjpasjdpasodjpaosdpasdoassd', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '103469012_p0.png', 'cm16'),
+(17, 'ádasdasdasdasasasdasasdasasd', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '91362471_p0_master1200.jpg', 'cm17'),
+(18, 'âggggggggggggggggggggggggggggggggggggggg', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '102036798_p0 - Copy - Copy (2).png', 'cm18'),
+(19, 'ghuhuhuhuuhuhuhuhuhuhuhuuh', 'o[asdi[asod[asd[oasdo[o[ad', NULL, 0, '105006236_p0_master1200.jpg', 'cm19'),
+(20, 'test add tag ', 'huhuhuhu', NULL, 0, 'Ã¡dasdasd-gigapixel-scale-2_00x.png', 'cm20'),
+(21, 'ádasdas', 'ádasdas', NULL, 0, '92607121_p0_master1200.jpg', 'cm21'),
+(22, 'ádasd', 'ádasasdas', NULL, 0, 'bluf.jpg', 'cm22'),
+(23, 'ádasdasd', 'ádasasd', NULL, 0, 'ddsaaw.jpg', 'cm23'),
+(24, 'ádasd', 'ádasda', NULL, 0, '2021_11_02_16_23_IMG_1723.JPG', 'cm24'),
+(25, 'ádasd', 'ádasdasd', NULL, 0, 'ddsaaw.jpg', 'cm25'),
+(26, 'ádasdas', 'ádasdassd', NULL, 0, 'Ã¡dasdas.png', 'cm26'),
+(27, 'Thằng này là Truyện Hoàn CmN chỉnh', 'tao', NULL, 0, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', 'cm27'),
+(28, 'Thằng này là Truyện Hoàn CmN chỉnh', 'tao', NULL, 0, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', 'cm28'),
+(29, 'Lần này ok thật', 'ádasasdasasd', NULL, 0, '2021_09_06_09_43_525006EB-B9A1-4906-8621-0DFDC1DF5617.JPG', 'cm29');
 
 -- --------------------------------------------------------
 
@@ -212,17 +241,37 @@ INSERT INTO `comics_tags` (`comicid`, `tagid`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Table structure for table `comics__comment`
 --
 
-CREATE TABLE `comments` (
+CREATE TABLE `comics__comment` (
   `id` int(11) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `topic_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `content` varchar(255) DEFAULT NULL,
-  `timestampe` time DEFAULT NULL
+  `topic_id` varchar(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` varchar(1000) DEFAULT NULL,
+  `timestampe` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comics__comment`
+--
+
+INSERT INTO `comics__comment` (`id`, `parent_id`, `topic_id`, `user_id`, `content`, `timestampe`) VALUES
+(1, NULL, 'cm2', 2, 'huhuhuhu', '2023-05-01 19:56:01'),
+(2, NULL, 'cm2', 2, 'huhuhu địt mẹ m', '2023-05-01 19:56:01'),
+(3, NULL, 'cm2', 2, 'huhuhu đcmm', '2023-05-01 19:56:01'),
+(4, NULL, 'cm12', 2, 'huhuhu sss', '2023-05-01 20:09:30'),
+(6, 1, 'cm2', 2, 'huhu cc à', '2023-05-01 20:54:41'),
+(7, 2, 'cm2', 2, 'đcmmm ', '2023-05-01 21:33:40'),
+(8, NULL, 'cm2', 2, 'test này', '2023-05-01 21:40:12'),
+(9, NULL, 'cm2', 2, 'test này', '2023-05-01 21:42:17'),
+(10, NULL, 'cm20', 2, 'test thử xem này', '2023-05-01 21:43:38'),
+(11, NULL, 'cm20', 2, 'test thử xem này', '2023-05-01 21:44:18'),
+(12, NULL, 'cm25', 2, 'truyện này để test', '2023-05-01 21:46:06'),
+(13, NULL, 'cm25', 2, 'ok, lần này hết mẹ lỗi r', '2023-05-01 21:46:58'),
+(14, 13, 'cm25', 2, 'oke chưa em', '2023-05-01 21:47:14'),
+(15, 13, 'cm25', 2, 'ok xong r đấy địt mejjjjjjjjjjjjjjjjjjjjj', '2023-05-01 21:48:13');
 
 -- --------------------------------------------------------
 
@@ -332,16 +381,6 @@ INSERT INTO `tags` (`tagid`, `tagname`, `taginf`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `topiccomments`
---
-
-CREATE TABLE `topiccomments` (
-  `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `userfollowingcomics`
 --
 
@@ -364,7 +403,8 @@ INSERT INTO `userfollowingcomics` (`userid`, `comicid`) VALUES
 (1, 24),
 (2, 2),
 (2, 20),
-(2, 20);
+(2, 20),
+(2, 22);
 
 -- --------------------------------------------------------
 
@@ -425,7 +465,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`userid`, `username`, `pass`, `gmail`, `avatar`, `dayat`, `fullname`, `gender`, `Point`) VALUES
 (1, 'mavie1', '1', 'maviess10@gmail.com', '1.png', '2023-03-22 18:31:03', 'Phan a', 'Nam', 98),
-(2, 'mavie', '1', NULL, 'bluf.jpg', '2023-03-26 18:07:00', 'anonymous', 'khác', 1),
+(2, 'mavie', '1', NULL, 'bluf.jpg', '2023-03-26 18:07:00', 'Thủy Kê Tử', 'Nam', 43),
 (3, 'vietanh', '1', NULL, '3.png', '2023-03-27 18:38:22', 'Thủy Kê Tử', 'Nam', 9),
 (4, 'maviee', '1', NULL, '4.png', '2023-04-20 20:45:38', 'anonymous', 'khác', 0);
 
@@ -438,15 +478,23 @@ INSERT INTO `users` (`userid`, `username`, `pass`, `gmail`, `avatar`, `dayat`, `
 --
 ALTER TABLE `chapters`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idx_topiccommentchap_id` (`topiccomment_id`) USING BTREE,
-  ADD KEY `Comics_ibfk_1` (`comicid`);
+  ADD KEY `Comics_ibfk_1` (`comicid`),
+  ADD KEY `topiccomment_id` (`topiccomment_id`);
+
+--
+-- Indexes for table `chapters__comment`
+--
+ALTER TABLE `chapters__comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `chapter__comment_ibfk_1` (`user_id`),
+  ADD KEY `chapter__comment_ibfk_2` (`topic_id`);
 
 --
 -- Indexes for table `comics`
 --
 ALTER TABLE `comics`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_topiccomment_id` (`topiccomment_id`);
+  ADD KEY `topiccomment_id` (`topiccomment_id`);
 
 --
 -- Indexes for table `comics_tags`
@@ -456,12 +504,12 @@ ALTER TABLE `comics_tags`
   ADD KEY `comics_tags_ibfk_2` (`tagid`);
 
 --
--- Indexes for table `comments`
+-- Indexes for table `comics__comment`
 --
-ALTER TABLE `comments`
+ALTER TABLE `comics__comment`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `Comments_ibfk_1` (`user_id`),
-  ADD KEY `Comments_ibfk_2` (`topic_id`);
+  ADD KEY `comic__comment_ibfk_1` (`user_id`),
+  ADD KEY `comic__comment_ibfk_2` (`topic_id`);
 
 --
 -- Indexes for table `levels`
@@ -474,12 +522,6 @@ ALTER TABLE `levels`
 --
 ALTER TABLE `tags`
   ADD PRIMARY KEY (`tagid`);
-
---
--- Indexes for table `topiccomments`
---
-ALTER TABLE `topiccomments`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `userfollowingcomics`
@@ -509,7 +551,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chapters`
 --
 ALTER TABLE `chapters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `chapters__comment`
+--
+ALTER TABLE `chapters__comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `comics`
@@ -518,16 +566,10 @@ ALTER TABLE `comics`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT for table `comics__comment`
 --
-ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `topiccomments`
---
-ALTER TABLE `topiccomments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `comics__comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -546,6 +588,13 @@ ALTER TABLE `chapters`
   ADD CONSTRAINT `Comics_ibfk_1` FOREIGN KEY (`comicid`) REFERENCES `comics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `chapters__comment`
+--
+ALTER TABLE `chapters__comment`
+  ADD CONSTRAINT `chapter__comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `chapter__comment_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `chapters` (`topiccomment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `comics_tags`
 --
 ALTER TABLE `comics_tags`
@@ -553,24 +602,17 @@ ALTER TABLE `comics_tags`
   ADD CONSTRAINT `comics_tags_ibfk_2` FOREIGN KEY (`tagid`) REFERENCES `tags` (`tagid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `comments`
+-- Constraints for table `comics__comment`
 --
-ALTER TABLE `comments`
-  ADD CONSTRAINT `Comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Comments_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topiccomments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `comics__comment`
+  ADD CONSTRAINT `comic__comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comic__comment_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `comics` (`topiccomment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `levels`
 --
 ALTER TABLE `levels`
   ADD CONSTRAINT `levels_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `topiccomments`
---
-ALTER TABLE `topiccomments`
-  ADD CONSTRAINT `topiccomments_ibfk_1` FOREIGN KEY (`id`) REFERENCES `comics` (`topiccomment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `topiccomments_ibfk_2` FOREIGN KEY (`id`) REFERENCES `chapters` (`topiccomment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `userfollowingcomics`
